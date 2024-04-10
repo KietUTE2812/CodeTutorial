@@ -1,0 +1,40 @@
+/* styles_baihoc.css */
+.background {
+    -fx-background-color: #98afff; /* Màu nền */
+    -fx-background-image: url("/Image/python.jpg");
+}
+
+#btnMucDo
+{
+    -fx-background-color: #29e643;
+    -fx-text-fill: white;
+}
+
+
+
+#btnBack
+{
+    -fx-font-size: 14px; /* Kích thước phông chữ */
+    -fx-background-color: transparent; /* Màu nền */
+    -fx-text-fill: white; /* Màu văn bản */
+    -fx-padding: 10px; /* Đệm */
+}
+#desktopPane {
+
+     /* nếu bạn muốn sử dụng hình nền */
+}
+#imageView {
+    -fx-fit-width: 200; /* Chiều rộng */
+    -fx-fit-height: 150; /* Chiều cao */
+}
+
+.ten-bai-hoc {
+    -fx-text-overrun: ellipsis;
+}
+.hbox {
+    -fx-spacing: 10;
+}
+.button {
+
+}
+

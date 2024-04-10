@@ -1,14 +1,53 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
-<?import java.util.*?>
-<?import javafx.scene.*?>
+<?import javafx.geometry.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
+<?import javafx.scene.shape.*?>
+<?import javafx.scene.web.*?>
 
-<AnchorPane xmlns="http://javafx.com/javafx"
-            xmlns:fx="http://javafx.com/fxml"
-            fx:controller="FXML.LessonCompiler"
-            prefHeight="400.0" prefWidth="600.0">
+<AnchorPane fx:id="layoutBaiHoc" prefHeight="600.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/17.0.2-ea"
+            xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="org.example.cuoiki_code_tutorial.Controllers.LessonCompiler">
+    <Button fx:id="btnMucDo" layoutX="10.0" layoutY="46.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="79.0"
+            text="Dễ" disable="true"/>
+
+
+    <Button fx:id="btnBack" layoutX="10.0" layoutY="10.0" onAction="#onBackButtonClick" text="Trở về"/>
+    <VBox alignment="CENTER"/>
+    <Label fx:id="lblTenBaiHoc" layoutX="70.0" layoutY="14.0" styleClass="ten-bai-hoc" text="Tên bài học"/>
+    <Button layoutX="414.0" layoutY="10.0" onAction="#onButton1Click" text="1"/>
+    <Button layoutX="444.0" layoutY="10.0" onAction="#onButton1Click" text="2"/>
+    <Button layoutX="474.0" layoutY="10.0" onAction="#onButton1Click" text="3"/>
+    <Button layoutX="504.0" layoutY="10.0" onAction="#onButton1Click" text="4"/>
+    <Button layoutX="534.0" layoutY="10.0" onAction="#onButton1Click" text="5"/>
+    <Label fx:id="lblTenBaiHoc1" layoutX="230.0" layoutY="45.0" styleClass="ten-bai-hoc" text="Giới hạn ký tự: 3000">'
+
+
+    </Label>
+    <HBox fx:id="hBox" layoutX="714.0" layoutY="10.0" />
+    <WebView fx:id="wViewBaiHoc" layoutX="10.0" layoutY="89.0" prefHeight="501.0" prefWidth="339.0"/>
+    <AnchorPane fx:id="codeLayout" layoutX="364.0" layoutY="45.0" prefHeight="546.0" prefWidth="523.0">
+        <children>
+            <ChoiceBox fx:id="btnNgonNgu" layoutY="1.0" prefHeight="26.0" prefWidth="97.0"/>
+            <Button fx:id="btnNopBai" layoutX="547.0" layoutY="1.0" mnemonicParsing="false" prefHeight="26.0"
+                    prefWidth="79.0" text="Nộp bài"/>
+            <Button fx:id="btnChayThu" layoutX="439.0" layoutY="1.0" mnemonicParsing="false" prefHeight="26.0"
+                    prefWidth="90.0" text="Chạy thử"/>
+            <TextArea layoutY="41.0" prefHeight="334.0" prefWidth="629.0"/>
+            <Label layoutX="14.0" layoutY="382.0" prefHeight="26.0" prefWidth="62.0" text="KIỂM THỬ"/>
+            <Line endX="620.199951171875" endY="3.0517578125E-5" layoutX="15.0" layoutY="408.0"
+                  startX="-14.000015258789062" startY="7.62939453125E-6"/>
+            <Button fx:id="btnKiemThu1" onAction="#onKiemThuClick" layoutY="416.0" mnemonicParsing="false"
+                    prefHeight="26.0" prefWidth="125.0" text="Kiểm thử 1"/>
+            <Button fx:id="btnKiemThu2" onAction="#onKiemThuClick" layoutY="449.0" mnemonicParsing="false"
+                    prefHeight="26.0" prefWidth="125.0" text="Kiểm thử 2"/>
+            <Button fx:id="btnKiemThu3" onAction="#onKiemThuClick" layoutY="482.0" mnemonicParsing="false"
+                    prefHeight="26.0" prefWidth="125.0" text="Kiểm thử 3"/>
+            <TextArea layoutX="133.0" layoutY="416.0" prefHeight="125.0" prefWidth="496.0"/>
+        </children>
+    </AnchorPane>
+    <Line endX="239.5" layoutX="110.0" layoutY="83.0" startX="-110.0"/>
+
 
 </AnchorPane>
