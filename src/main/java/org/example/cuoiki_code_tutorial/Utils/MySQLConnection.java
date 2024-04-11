@@ -1,8 +1,5 @@
 package org.example.cuoiki_code_tutorial.Utils;
 
-import org.example.cuoiki_code_tutorial.Dao.BaiHocDAO;
-import org.example.cuoiki_code_tutorial.Dao.StudentDao;
-
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
@@ -14,7 +11,7 @@ public class MySQLConnection {
 		Connection con = null;
 		try {
 			Class.forName("com.mysql.cj.jdbc.Driver");
-			con = DriverManager.getConnection("jdbc:mysql://localhost:3306/codelearn", "root", "thanhbinh1411");
+			con = DriverManager.getConnection("jdbc:mysql://localhost:3306/stu", "root", "Kiet@2003");
 		} catch (Exception e) {
 			System.out.println(e);
 			return null;
