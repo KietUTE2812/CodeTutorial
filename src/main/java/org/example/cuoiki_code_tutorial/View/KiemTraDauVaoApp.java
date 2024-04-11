@@ -14,7 +14,7 @@ public class KiemTraDauVaoApp extends Application {
     public void start(Stage stage) throws IOException {
 
         String pathToFXML = "/FXML/KiemTraDauVao.fxml";
-        FXMLLoader fxmlLoader = new FXMLLoader(BaiHocApplication.class.getResource(pathToFXML));
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource(pathToFXML));
 
         AnchorPane root = new AnchorPane();
         root.getChildren().add(fxmlLoader.load());
