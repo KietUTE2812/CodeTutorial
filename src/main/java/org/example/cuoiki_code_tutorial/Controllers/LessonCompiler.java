@@ -4,156 +4,93 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.event.ActionEvent;
-import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.geometry.Insets;
-import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
-import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Label;
-import javafx.scene.control.TextArea;
-import javafx.scene.layout.*;
-import javafx.scene.paint.Paint;
+import javafx.scene.control.ListView;
+import javafx.scene.image.ImageView;
+import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.BorderPane;
+import javafx.scene.image.Image;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.Region;
 import javafx.scene.web.WebEngine;
 import javafx.scene.web.WebView;
-import javafx.stage.Stage;
 import org.example.cuoiki_code_tutorial.Dao.BaiHocDAO;
-import org.example.cuoiki_code_tutorial.Models.BaiHoc;
-import org.fxmisc.richtext.CodeArea;
-import org.fxmisc.richtext.LineNumberFactory;
 
 
-import java.io.IOException;
-import java.io.StringWriter;
+import java.io.File;
 import java.net.URL;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 import java.util.ResourceBundle;
 
-
-
 public class LessonCompiler implements Initializable {
     @FXML
-    private AnchorPane layoutBaiHoc;
+    private Label statusLabel;
+    @FXML
+    private AnchorPane rootPane, layoutBaiHoc;
+    @FXML
+    private BorderPane rootBorder;
+    @FXML
+    private ImageView imageView;
+
     @FXML
     private WebView wViewBaiHoc;
     @FXML
-    private Label lblTenBaiHoc, lblGHKT;
+    private Label lblTenBaiHoc;
+
     @FXML
     private Button btnMucDo;
     @FXML
-    private Button btnKiemThu1, btnChayThu;
-    @FXML
     private HBox hBox;
-    @FXML
-    private ChoiceBox<String> choiceBoxNgonNgu;
-    @FXML
-    private VBox vBoxCodeEditor;
 
+    private ObservableList<Button> buttons = FXCollections.observableArrayList();
 
-
-    private BaiHoc baiHoc;
-    private KiemTraDauVao kiemTraDauVao;
     private static final BaiHocDAO baiHocDAO = new BaiHocDAO();
-    private String ngonNgu;
 
-    private PythonExecutor pythonExecutor;
-
-
-
-
-    @FXML
-    private  CodeArea codeArea;
-    @FXML
-    private  TextArea outputArea;
-
-    public LessonCompiler() {
+    public void handleCompileButtonAction(ActionEvent actionEvent) {
+        statusLabel.setText("Compilation started...");
     }
-
-//    public LessonCompiler(CodeArea codeArea, TextArea outputArea ) {
-//        this.codeArea = codeArea;
-//        this.outputArea = outputArea;
-//        interpreter = new PythonInterpreter();
-//    }
-
-//    public String executeCode() {
-//        String code = codeArea.getText();
-//        String output;
-//        try {
-//            StringWriter writer = new StringWriter();
-//            interpreter.setOut(writer);
-//            interpreter.exec(code);
-//            output = writer.toString();
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//            output = e.getMessage();
-//        }
-//        return output;
-//    }
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        WebEngine webEngine = wViewBaiHoc.getEngine();
+
+        // HTML content
+        String htmlContent = "";
+
+        // Load HTML content vào WebView
+        webEngine.loadContent(htmlContent);
         String pathToStyle = "/CSS/styles_baihoc.css";
         layoutBaiHoc.getStylesheets().add(getClass().getResource("/CSS/styles_baihoc.css").toExternalForm());
 
-        ObservableList<String> options = FXCollections.observableArrayList("Python", "Java", "C++");
-        choiceBoxNgonNgu.setItems(options);
-        choiceBoxNgonNgu.getSelectionModel().select(0);
-        choiceBoxNgonNgu.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) ->{
-            System.out.println("Selected item: " + newValue);
-            ngonNgu = choiceBoxNgonNgu.getSelectionModel().getSelectedItem();
-
-
-            System.out.println(ngonNgu);
-        } );
-
-        setUpCodeArea();
-
-        pythonExecutor = new PythonExecutor(codeArea, outputArea);
-
-
     }
 
-    public void setUpCodeArea() {
-        codeArea.setStyle("-fx-font-family: 'Consolas'; -fx-font-size: 14px; -fx-text-fill: #d4d4d4; ");
-        codeArea.setBackground(new Background(new BackgroundFill(Paint.valueOf("#dddddd"), CornerRadii.EMPTY, Insets.EMPTY)));
-        codeArea.setParagraphGraphicFactory(LineNumberFactory.get(codeArea));
-        codeArea.setOnKeyTyped(e -> codeArea.autosize());
-        codeArea.setOnKeyPressed(e -> codeArea.autosize());
-        codeArea.setTextInsertionStyle(Collections.singleton("-fx-background-color: red;"));
-        codeArea.showParagraphAtTop(1);
-        codeArea.setStyle("-fx-paragraph-graph-color: #d900d1;");
-    }
+    public void onBackButtonClick(ActionEvent actionEvent) {
+        String maBH = "bai1";
+        String maChuong = "chuong1";
 
-    public void onBackButtonClick(ActionEvent actionEvent) throws SQLException {
-
-
-    }
-
-
-    public void onKiemThuClick(ActionEvent actionEvent) throws SQLException {
-        goKiemtraDauVaoLayout();
-    }
-
-    public void getBaiHocByThuTu(int thuTu) {
-        BaiHoc baiHoc = baiHocDAO.getBaiHocByThuTu(thuTu);
-
-        String tenBH = baiHoc.getTenBaiHoc();
-        String noiDung = baiHoc.getNoiDung();
-        if (tenBH.length() > 50) {
-            tenBH = tenBH.substring(0, 50) + "...";
-        }
-        lblTenBaiHoc.setText(tenBH);
         WebEngine webEngine = wViewBaiHoc.getEngine();
+
+        // HTML content
+
+
+        String tenBaiHoc = baiHocDAO.tenBaiHoc(maBH, maChuong);
+        String noiDung = baiHocDAO.noiDungBaiHoc(maBH, maChuong);
+        //String test = "<img src=\"/codelearn-logo.png\" alt=\"logo\" class=\"mantine-kfwiow mantine-Image-image\" style=\"object-fit: cover; width: 7.6875rem; height: 2.5rem;\">";
+        //lblTenBaiHoc.setText("Tên bài học dài quá lần này, vì vậy chỉ một phần sẽ được hiển thị và cuối cùng là dấu '...' để biểu thị.");
+        // Load HTML content vào WebView
         webEngine.loadContent(noiDung);
+        if (tenBaiHoc.length() > 50) {
+            tenBaiHoc = tenBaiHoc.substring(0, 50) + "...";
+        }
+        lblTenBaiHoc.setText(tenBaiHoc);
 
-        String mucDo = baiHoc.getMucDo();
-        int GHKT = baiHoc.getGioiHanKyTu();
-        lblGHKT.setText("Giới hạn ký tự: " + GHKT);
-
+        System.out.println("tenbai: " + tenBaiHoc);
+        String mucDo = "Khó";
         switch (mucDo) {
             case "Dễ":
                 btnMucDo.setStyle("-fx-background-color: green;");
@@ -168,16 +105,22 @@ public class LessonCompiler implements Initializable {
                 btnMucDo.setText("Vừa");
                 break;
             default:
+
                 break;
         }
+
+
     }
 
-    public void getSoLuongBaiHoc(String maChuong) throws SQLException {
+    public void onButton1Click(ActionEvent actionEvent) {
+    }
+
+    public void onKiemThuClick(ActionEvent actionEvent) throws SQLException {
         List<Integer> thuTu = new ArrayList<>();
         hBox.getChildren().clear();
         hBox.setStyle("-fx-spacing: 10px;");
 
-        thuTu = baiHocDAO.getThuTuByMaChuong(maChuong);
+        thuTu = baiHocDAO.getThuTuByMaChuong("chuong2")  ;
 
         for (int i = 0; i < thuTu.size(); i++) {
             int count = thuTu.get(i);
@@ -188,69 +131,11 @@ public class LessonCompiler implements Initializable {
                 // Xác định button được click
                 Button clickedButton = (Button) event.getSource();
                 int clickedValue = Integer.parseInt(clickedButton.getText());
-                getBaiHocByThuTu(clickedValue);
+                System.out.println("Button clicked: " + clickedValue);
             });
 
             hBox.getChildren().addAll(button, new Region());
 
         }
-    }
-
-    public void goKiemtraDauVaoLayout() {
-        try {
-            Parent root = FXMLLoader.load(getClass().getResource("/FXML/KiemTraDauVao.fxml"));
-            root.getStyleClass().add("background");
-            Scene scene = new Scene(root, 1000, 600);
-            // Kết nối tệp CSS với scene
-            String pathToStyle = "/CSS/styles_baihoc.css";
-            scene.getStylesheets().add(getClass().getResource(pathToStyle).toExternalForm());
-            Stage stage = (Stage) btnKiemThu1.getScene().getWindow();
-            stage.setScene(scene);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-
-    public void loadBaiHocByMaBHMaChuong(String maBH, String maChuong) throws SQLException {
-        getSoLuongBaiHoc(maChuong);
-        BaiHoc baiHoc = baiHocDAO.getBaiHocByMaBHMaChuong(maBH, maChuong);
-
-        String tenBH = baiHoc.getTenBaiHoc();
-        String noiDung = baiHoc.getNoiDung();
-        if (tenBH.length() > 50) {
-            tenBH = tenBH.substring(0, 50) + "...";
-        }
-        lblTenBaiHoc.setText(tenBH);
-        WebEngine webEngine = wViewBaiHoc.getEngine();
-        webEngine.loadContent(noiDung);
-
-        String mucDo = baiHoc.getMucDo();
-        int GHKT = baiHoc.getGioiHanKyTu();
-        lblGHKT.setText("Giới hạn ký tự: " + GHKT);
-
-        switch (mucDo) {
-            case "Dễ":
-                btnMucDo.setStyle("-fx-background-color: green;");
-                btnMucDo.setText("Dễ");
-                break;
-            case "Khó":
-                btnMucDo.setStyle("-fx-background-color: red;");
-                btnMucDo.setText("Khó");
-                break;
-            case "Vừa":
-                btnMucDo.setStyle("-fx-background-color: blue;");
-                btnMucDo.setText("Vừa");
-                break;
-            default:
-
-                break;
-        }
-    }
-
-
-    public void onClickChayThu(ActionEvent actionEvent) {
-        String testcase =  "a = calculate_area(3,4)\nprint(a)   ";
-        String output = pythonExecutor.executeCode(testcase);
-        outputArea.appendText(output);
     }
 }
