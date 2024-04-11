@@ -42,6 +42,20 @@
             <version>${junit.version}</version>
             <scope>test</scope>
         </dependency>
+
+        <!-- https://mvnrepository.com/artifact/com.mysql/mysql-connector-j -->
+        <dependency>
+            <groupId>com.mysql</groupId>
+            <artifactId>mysql-connector-j</artifactId>
+            <version>8.3.0</version>
+        </dependency>
+
+        <!-- https://mvnrepository.com/artifact/org.openjfx/javafx-web -->
+        <dependency>
+            <groupId>org.openjfx</groupId>
+            <artifactId>javafx-web</artifactId>
+            <version>22</version>
+        </dependency>
     </dependencies>
 
     <build>
@@ -65,7 +79,7 @@
                         <id>default-cli</id>
                         <configuration>
                             <mainClass>
-                                org.example.cuoiki_code_tutorial/org.example.cuoiki_code_tutorial.View.HelloApplication
+                                org.example.cuoiki_code_tutorial/org.example.cuoiki_code_tutorial.View.Main
                             </mainClass>
                             <launcher>app</launcher>
                             <jlinkZipName>app</jlinkZipName>
