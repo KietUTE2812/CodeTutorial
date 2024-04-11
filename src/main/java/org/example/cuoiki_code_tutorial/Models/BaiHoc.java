@@ -1,99 +1,28 @@
 package org.example.cuoiki_code_tutorial.Models;
 
 public class BaiHoc {
-    private String maBaiHoc;
-    private String tenBaiHoc;
+    private String maBH;
+    private String tenBH;
     private String noiDung;
-    private String dinhDang;
     private int thoiLuong;
     private String maChuong;
     private int thuTu;
     private int trangThai;
-    private int gioiHanKyTu;
-    private String mucDo;
-    private String codeMau;
-    private String maKhoaHoc;
 
-    public String getMaKhoaHoc() {
-        return maKhoaHoc;
+    public String getMaBH() {
+        return maBH;
     }
 
-    public void setMaKhoaHoc(String maKhoaHoc) {
-        this.maKhoaHoc = maKhoaHoc;
+    public void setMaBH(String maBH) {
+        this.maBH = maBH;
     }
 
-    public String getCodeMau() {
-        return codeMau;
+    public String getTenBH() {
+        return tenBH;
     }
 
-    public void setCodeMau(String codeMau) {
-        this.codeMau = codeMau;
-    }
-
-    public BaiHoc(String id, String tenBaiHoc, String noiDung, int thoiLuong, String maChuong, int thuTu, int trangThai) {
-        this.tenBaiHoc = tenBaiHoc;
-        this.noiDung = noiDung;
-        this.gioiHanKyTu = gioiHanKyTu;
-        this.mucDo = mucDo;
-        this.maBaiHoc = id;
-        this.thoiLuong = thoiLuong;
-        this.maChuong = maChuong;
-        this.thuTu = thuTu;
-        this.trangThai = trangThai;
-    }
-
-    public String getMucDo() {
-        return mucDo;
-    }
-
-    public void setMucDo(String mucDo) {
-        this.mucDo = mucDo;
-    }
-
-    public int getGioiHanKyTu() {
-        return gioiHanKyTu;
-    }
-
-    public void setGioiHanKyTu(int gioiHanKyTu) {
-        this.gioiHanKyTu = gioiHanKyTu;
-    }
-
-    public BaiHoc( String tenBaiHoc, String noiDung, int gioiHanKyTu, String mucDo, String codeMau) {
-        this.tenBaiHoc = tenBaiHoc;
-        this.noiDung = noiDung;
-        this.gioiHanKyTu = gioiHanKyTu;
-        this.mucDo = mucDo;
-        this.codeMau = codeMau;
-    }
-
-    public BaiHoc() {
-    }
-
-    public BaiHoc(String maBaiHoc, String tenBaiHoc, String noiDung, String dinhDang, int thoiLuong, String maChuong, int thuTu, int trangThai) {
-        this.maBaiHoc = maBaiHoc;
-        this.tenBaiHoc = tenBaiHoc;
-        this.noiDung = noiDung;
-        this.dinhDang = dinhDang;
-        this.thoiLuong = thoiLuong;
-        this.maChuong = maChuong;
-        this.thuTu = thuTu;
-        this.trangThai = trangThai;
-    }
-
-    public String getMaBaiHoc() {
-        return maBaiHoc;
-    }
-
-    public void setMaBaiHoc(String maBaiHoc) {
-        this.maBaiHoc = maBaiHoc;
-    }
-
-    public String getTenBaiHoc() {
-        return tenBaiHoc;
-    }
-
-    public void setTenBaiHoc(String tenBaiHoc) {
-        this.tenBaiHoc = tenBaiHoc;
+    public void setTenBH(String tenBH) {
+        this.tenBH = tenBH;
     }
 
     public String getNoiDung() {
@@ -102,14 +31,6 @@ public class BaiHoc {
 
     public void setNoiDung(String noiDung) {
         this.noiDung = noiDung;
-    }
-
-    public String getDinhDang() {
-        return dinhDang;
-    }
-
-    public void setDinhDang(String dinhDang) {
-        this.dinhDang = dinhDang;
     }
 
     public int getThoiLuong() {
@@ -141,6 +62,16 @@ public class BaiHoc {
     }
 
     public void setTrangThai(int trangThai) {
+        this.trangThai = trangThai;
+    }
+
+    public BaiHoc(String maBH, String tenBH, String noiDung, int thoiLuong, String maChuong, int thuTu, int trangThai) {
+        this.maBH = maBH;
+        this.tenBH = tenBH;
+        this.noiDung = noiDung;
+        this.thoiLuong = thoiLuong;
+        this.maChuong = maChuong;
+        this.thuTu = thuTu;
         this.trangThai = trangThai;
     }
 }
