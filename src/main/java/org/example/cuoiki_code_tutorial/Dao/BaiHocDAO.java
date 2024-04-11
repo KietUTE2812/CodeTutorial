@@ -80,5 +80,46 @@ public class BaiHocDAO {
         return thuTuList;
     }
 
+    public String tenBaiHocByThuTu(int thuTu) {
+        String tenBaiHoc = null;
+        String query = "call GetTenBaiHocByThuTu(?);";
+        try {
+            Connection conn = MySQLConnection.getConnection();
+            PreparedStatement preparedStatement = conn.prepareStatement(query);
+            preparedStatement.setInt(1, thuTu);
+
+            ResultSet rs = preparedStatement.executeQuery();
+            if (rs.next()) {
+                tenBaiHoc = rs.getString("TenBH");
+            }
+            rs.close();
+            preparedStatement.close();
+            conn.close();
+        } catch (SQLException e) {
+            HandleException.printSQLException(e);
+        }
+        return tenBaiHoc;
+    }
+    public String noiDungByThuTu(int thuTu) {
+        String noiDung = null;
+        String query = "call GetNoiDungByThuTu(?);";
+        try {
+            Connection conn = MySQLConnection.getConnection();
+            PreparedStatement preparedStatement = conn.prepareStatement(query);
+            preparedStatement.setInt(1, thuTu);
+
+            ResultSet rs = preparedStatement.executeQuery();
+            if (rs.next()) {
+                noiDung = rs.getString("NoiDung");
+            }
+            rs.close();
+            preparedStatement.close();
+            conn.close();
+        } catch (SQLException e) {
+            HandleException.printSQLException(e);
+        }
+        return noiDung;
+    }
+
 
 }

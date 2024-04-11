@@ -1,0 +1,4 @@
+.background {
+    -fx-background-color: #98afff; /* Màu nền */
+    -fx-background-image: url("/Image/python.jpg");
+}
