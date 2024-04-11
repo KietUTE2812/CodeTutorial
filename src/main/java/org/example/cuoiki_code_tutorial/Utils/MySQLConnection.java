@@ -1,6 +1,5 @@
 package org.example.cuoiki_code_tutorial.Utils;
 
-
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
@@ -12,7 +11,7 @@ public class MySQLConnection {
 		Connection con = null;
 		try {
 			Class.forName("com.mysql.cj.jdbc.Driver");
-			con = DriverManager.getConnection("jdbc:mysql://localhost:3306/stu", "root", "Kiet@2003");
+			con = DriverManager.getConnection("jdbc:mysql://localhost:3306/hoccode", "root", "Kiet@2003");
 		} catch (Exception e) {
 			System.out.println(e);
 			return null;
@@ -26,7 +25,6 @@ public class MySQLConnection {
 			conn.close();
 		}else
 			System.out.println("Can not connect to MySQL!");
-
 
 	}
 	
