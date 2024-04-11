@@ -120,7 +120,7 @@ public class LessonCompiler implements Initializable {
         hBox.getChildren().clear();
         hBox.setStyle("-fx-spacing: 10px;");
 
-        thuTu = baiHocDAO.getThuTuByMaChuong("chuong2");
+        thuTu = baiHocDAO.getThuTuByMaChuong("chuong2")  ;
 
         for (int i = 0; i < thuTu.size(); i++) {
             int count = thuTu.get(i);
