@@ -25,7 +25,7 @@ public class demo extends Application {
             WebView w = new WebView();
 
             // get the web engine
-            WebEngine e = w.getEngine()  ;
+            WebEngine e = w.getEngine();
 
             // load a website
             e.load("https://www.geeksforgeeks.org");
