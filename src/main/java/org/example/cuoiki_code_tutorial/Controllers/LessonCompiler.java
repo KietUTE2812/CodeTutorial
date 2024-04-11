@@ -6,6 +6,7 @@ import javafx.fxml.FXML;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -19,6 +20,7 @@ import javafx.scene.web.WebEngine;
 import javafx.scene.web.WebView;
 import javafx.stage.Stage;
 import org.example.cuoiki_code_tutorial.Dao.BaiHocDAO;
+import org.example.cuoiki_code_tutorial.Models.BaiHoc;
 
 
 import java.io.IOException;
@@ -27,21 +29,14 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
+
 public class LessonCompiler implements Initializable {
     @FXML
-    private Label statusLabel;
-    @FXML
-    private AnchorPane rootPane, layoutBaiHoc;
-    @FXML
-    private BorderPane rootBorder;
-    @FXML
-    private ImageView imageView;
-
+    private AnchorPane layoutBaiHoc;
     @FXML
     private WebView wViewBaiHoc;
     @FXML
-    private Label lblTenBaiHoc;
-
+    private Label lblTenBaiHoc, lblGHKT;
     @FXML
     private Button btnMucDo;
     @FXML
@@ -49,7 +44,8 @@ public class LessonCompiler implements Initializable {
     @FXML
     private HBox hBox;
 
-
+    private BaiHoc baiHoc;
+    private KiemTraDauVao kiemTraDauVao;
     private static final BaiHocDAO baiHocDAO = new BaiHocDAO();
 
     public LessonCompiler() {
@@ -59,18 +55,31 @@ public class LessonCompiler implements Initializable {
         this.btnMucDo = new Button();
     }
 
+    public LessonCompiler(BaiHoc baiHoc) throws SQLException {
+        this.baiHoc = baiHoc;
+        this.hBox = new HBox();
+        this.wViewBaiHoc = new WebView();
+        this.lblTenBaiHoc = new Label();
+        this.btnMucDo = new Button();
+        this.lblGHKT = new Label();
+        loadBaiHocByMaBHMaChuongObj(baiHoc);
+    }
+
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+//        String maBH = "bai1";
+//        String maChuong = "chuong6";
+//        try {
+//            loadBaiHocByMaBHMaChuong(maBH, maChuong);
+//        } catch (SQLException e) {
+//            throw new RuntimeException(e);
+//        }
         String pathToStyle = "/CSS/styles_baihoc.css";
         layoutBaiHoc.getStylesheets().add(getClass().getResource("/CSS/styles_baihoc.css").toExternalForm());
 
     }
 
     public void onBackButtonClick(ActionEvent actionEvent) throws SQLException {
-
-        String maBH = "bai1";
-        String maChuong = "chuong4";
-        loadBaiHocByMaBHMaChuong(maBH, maChuong);
 
 
     }
@@ -81,9 +90,10 @@ public class LessonCompiler implements Initializable {
     }
 
     public void getBaiHocByThuTu(int thuTu) {
+        BaiHoc baiHoc = baiHocDAO.getBaiHocByThuTu(thuTu);
 
-        String tenBH = baiHocDAO.tenBaiHocByThuTu(thuTu);
-        String noiDung = baiHocDAO.noiDungByThuTu(thuTu);
+        String tenBH = baiHoc.getTenBaiHoc();
+        String noiDung = baiHoc.getNoiDung();
         if (tenBH.length() > 50) {
             tenBH = tenBH.substring(0, 50) + "...";
         }
@@ -91,7 +101,10 @@ public class LessonCompiler implements Initializable {
         WebEngine webEngine = wViewBaiHoc.getEngine();
         webEngine.loadContent(noiDung);
 
-        String mucDo = "Vừa";
+        String mucDo = baiHoc.getMucDo();
+        int GHKT = baiHoc.getGioiHanKyTu();
+        lblGHKT.setText("Giới hạn ký tự: " + GHKT);
+
         switch (mucDo) {
             case "Dễ":
                 btnMucDo.setStyle("-fx-background-color: green;");
@@ -106,7 +119,6 @@ public class LessonCompiler implements Initializable {
                 btnMucDo.setText("Vừa");
                 break;
             default:
-
                 break;
         }
     }
@@ -151,19 +163,22 @@ public class LessonCompiler implements Initializable {
     }
 
     public void loadBaiHocByMaBHMaChuong(String maBH, String maChuong) throws SQLException {
-
         getSoLuongBaiHoc(maChuong);
+        BaiHoc baiHoc = baiHocDAO.getBaiHocByMaBHMaChuong(maBH, maChuong);
 
-        WebEngine webEngine = wViewBaiHoc.getEngine();
-        String tenBaiHoc = baiHocDAO.tenBaiHoc(maBH, maChuong);
-        String noiDung = baiHocDAO.noiDungBaiHoc(maBH, maChuong);
-        webEngine.loadContent(noiDung);
-        if (tenBaiHoc.length() > 50) {
-            tenBaiHoc = tenBaiHoc.substring(0, 50) + "...";
+        String tenBH = baiHoc.getTenBaiHoc();
+        String noiDung = baiHoc.getNoiDung();
+        if (tenBH.length() > 50) {
+            tenBH = tenBH.substring(0, 50) + "...";
         }
-        lblTenBaiHoc.setText(tenBaiHoc);
-        System.out.println("tenbai: " + tenBaiHoc);
-        String mucDo = "Khó";
+        lblTenBaiHoc.setText(tenBH);
+        WebEngine webEngine = wViewBaiHoc.getEngine();
+        webEngine.loadContent(noiDung);
+
+        String mucDo = baiHoc.getMucDo();
+        int GHKT = baiHoc.getGioiHanKyTu();
+        lblGHKT.setText("Giới hạn ký tự: " + GHKT);
+
         switch (mucDo) {
             case "Dễ":
                 btnMucDo.setStyle("-fx-background-color: green;");
@@ -180,6 +195,49 @@ public class LessonCompiler implements Initializable {
             default:
 
                 break;
+        }
+    }
+
+    public void loadBaiHocByMaBHMaChuongObj(BaiHoc baiHoc) throws SQLException {
+
+        String tenBH = baiHoc.getTenBaiHoc();
+        String noiDung = baiHoc.getNoiDung();
+        if (tenBH.length() > 50) {
+            tenBH = tenBH.substring(0, 50) + "...";
+        }
+        lblTenBaiHoc.setText(tenBH);
+        WebEngine webEngine = wViewBaiHoc.getEngine();
+        webEngine.loadContent(noiDung);
+
+        String mucDo = baiHoc.getMucDo();
+        int GHKT = baiHoc.getGioiHanKyTu();
+        lblGHKT.setText("Giới hạn ký tự: " + GHKT);
+
+        switch (mucDo) {
+            case "Dễ":
+                btnMucDo.setStyle("-fx-background-color: green;");
+                btnMucDo.setText("Dễ");
+                break;
+            case "Khó":
+                btnMucDo.setStyle("-fx-background-color: red;");
+                btnMucDo.setText("Khó");
+                break;
+            case "Vừa":
+                btnMucDo.setStyle("-fx-background-color: blue;");
+                btnMucDo.setText("Vừa");
+                break;
+            default:
+
+                break;
+        }
+    }
+
+    public void showLayoutLessonCompiler(String maBH,String maChuong) throws IOException {
+        try {
+            loadBaiHocByMaBHMaChuong(maBH, maChuong);
+        } catch (SQLException e) {
+            e.printStackTrace();
+            throw new RuntimeException(e);
         }
     }
 

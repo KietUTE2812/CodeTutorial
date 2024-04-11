@@ -17,7 +17,7 @@
 <!--    <Button layoutX="474.0" layoutY="10.0" onAction="#onButton1Click" text="3"/>-->
 <!--    <Button layoutX="504.0" layoutY="10.0" onAction="#onButton1Click" text="4"/>-->
 <!--    <Button layoutX="534.0" layoutY="10.0" onAction="#onButton1Click" text="5"/>-->
-    <Label fx:id="lblTenBaiHoc1" layoutX="230.0" layoutY="45.0" styleClass="ten-bai-hoc" text="Giới hạn ký tự: 3000">'
+    <Label fx:id="lblGHKT" layoutX="230.0" layoutY="45.0" styleClass="ten-bai-hoc" text="Giới hạn ký tự: 3000">'
 
 
     </Label>

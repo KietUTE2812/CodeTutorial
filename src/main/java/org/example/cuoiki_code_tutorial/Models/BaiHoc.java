@@ -9,6 +9,31 @@ public class BaiHoc {
     private String maChuong;
     private int thuTu;
     private String trangThai;
+    private int gioiHanKyTu;
+    private String mucDo;
+
+    public String getMucDo() {
+        return mucDo;
+    }
+
+    public void setMucDo(String mucDo) {
+        this.mucDo = mucDo;
+    }
+
+    public int getGioiHanKyTu() {
+        return gioiHanKyTu;
+    }
+
+    public void setGioiHanKyTu(int gioiHanKyTu) {
+        this.gioiHanKyTu = gioiHanKyTu;
+    }
+
+    public BaiHoc( String tenBaiHoc, String noiDung, int gioiHanKyTu, String mucDo) {
+        this.tenBaiHoc = tenBaiHoc;
+        this.noiDung = noiDung;
+        this.gioiHanKyTu = gioiHanKyTu;
+        this.mucDo = mucDo;
+    }
 
     public BaiHoc() {
     }

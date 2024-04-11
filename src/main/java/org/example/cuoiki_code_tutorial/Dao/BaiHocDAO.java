@@ -14,48 +14,69 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class BaiHocDAO {
-    public String noiDungBaiHoc(String maBH, String maChuong) {
-        String noiDung = null;
-        String query = "call GetNoiDungByMaBHMaChuong(?, ?)";
-        try {
+
+    public BaiHoc getBaiHocByMaBHMaChuong(String maBH, String maChuong)
+    {
+        BaiHoc baiHoc = null;
+        String query= "call get_baihoc_by_mabh_machuong(?, ?);";
+        try
+        {
             Connection conn = MySQLConnection.getConnection();
             PreparedStatement preparedStatement = conn.prepareStatement(query);
             preparedStatement.setString(1, maBH);
             preparedStatement.setString(2, maChuong);
+
             ResultSet rs = preparedStatement.executeQuery();
-            if (rs.next()) {
-                noiDung = rs.getString("NoiDung");
+
+            if(rs.next())
+            {
+                String tenBaiHoc = rs.getString("TenBH");
+                String noiDung = rs.getString("NoiDung");
+                int GHKT = rs.getInt("GioiHanKyTu");
+                String mucDo = rs.getString("MucDo");
+
+                baiHoc = new BaiHoc(tenBaiHoc, noiDung, GHKT, mucDo);
             }
             rs.close();
             preparedStatement.close();
             conn.close();
         } catch (SQLException e) {
             HandleException.printSQLException(e);
+            throw new RuntimeException(e);
         }
-        return noiDung;
+        return baiHoc;
     }
-
-    public String tenBaiHoc(String maBH, String maChuong) {
-        String tenBaiHoc = null;
-        String query = "call GetTenBaiHocByMaBHMaChuong(?, ?)";
-        try {
+    public BaiHoc getBaiHocByThuTu(int thuTu)
+    {
+        BaiHoc baiHoc = null;
+        String query= "call get_baihoc_by_thutu(?);";
+        try
+        {
             Connection conn = MySQLConnection.getConnection();
             PreparedStatement preparedStatement = conn.prepareStatement(query);
-            preparedStatement.setString(1, maBH);
-            preparedStatement.setString(2, maChuong);
+            preparedStatement.setInt(1,thuTu);
+
+
             ResultSet rs = preparedStatement.executeQuery();
-            if (rs.next()) {
-                tenBaiHoc = rs.getString("TenBH");
+
+            if(rs.next())
+            {
+                String tenBaiHoc = rs.getString("TenBH");
+                String noiDung = rs.getString("NoiDung");
+                int GHKT = rs.getInt("GioiHanKyTu");
+                String mucDo = rs.getString("MucDo");
+
+                baiHoc = new BaiHoc(tenBaiHoc, noiDung, GHKT, mucDo);
             }
             rs.close();
             preparedStatement.close();
             conn.close();
         } catch (SQLException e) {
             HandleException.printSQLException(e);
+            throw new RuntimeException(e);
         }
-        return tenBaiHoc;
+        return baiHoc;
     }
-
     public List<Integer> getThuTuByMaChuong(String maChuong) throws SQLException {
         List<Integer> thuTuList = new ArrayList<>();
         String query = "CALL getThuTuByMaChuong(?);";
@@ -78,47 +99,6 @@ public class BaiHocDAO {
 
 
         return thuTuList;
-    }
-
-    public String tenBaiHocByThuTu(int thuTu) {
-        String tenBaiHoc = null;
-        String query = "call GetTenBaiHocByThuTu(?);";
-        try {
-            Connection conn = MySQLConnection.getConnection();
-            PreparedStatement preparedStatement = conn.prepareStatement(query);
-            preparedStatement.setInt(1, thuTu);
-
-            ResultSet rs = preparedStatement.executeQuery();
-            if (rs.next()) {
-                tenBaiHoc = rs.getString("TenBH");
-            }
-            rs.close();
-            preparedStatement.close();
-            conn.close();
-        } catch (SQLException e) {
-            HandleException.printSQLException(e);
-        }
-        return tenBaiHoc;
-    }
-    public String noiDungByThuTu(int thuTu) {
-        String noiDung = null;
-        String query = "call GetNoiDungByThuTu(?);";
-        try {
-            Connection conn = MySQLConnection.getConnection();
-            PreparedStatement preparedStatement = conn.prepareStatement(query);
-            preparedStatement.setInt(1, thuTu);
-
-            ResultSet rs = preparedStatement.executeQuery();
-            if (rs.next()) {
-                noiDung = rs.getString("NoiDung");
-            }
-            rs.close();
-            preparedStatement.close();
-            conn.close();
-        } catch (SQLException e) {
-            HandleException.printSQLException(e);
-        }
-        return noiDung;
     }
 
 
