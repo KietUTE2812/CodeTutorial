@@ -1,7 +1,8 @@
 module org.example.cuoiki_code_tutorial {
     requires javafx.controls;
     requires javafx.fxml;
-
+    requires javafx.web;
+    requires javafx.graphics;
     requires org.kordamp.bootstrapfx.core;
     requires java.sql;
     requires javafx.web;
