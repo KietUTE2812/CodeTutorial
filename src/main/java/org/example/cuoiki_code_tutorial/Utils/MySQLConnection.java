@@ -1,5 +1,6 @@
 package org.example.cuoiki_code_tutorial.Utils;
 
+
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
@@ -26,23 +27,7 @@ public class MySQLConnection {
 		}else
 			System.out.println("Can not connect to MySQL!");
 
-		String maBH = "bai1";
-		String maChuong = "chuong4";
 
-		BaiHocDAO baihoc = new BaiHocDAO();
-		String noiDung = baihoc.tenBaiHoc(maBH, maChuong);
-		List<Integer> thuTu = new ArrayList<>();
-		thuTu = baihoc.getThuTuByMaChuong(maChuong);
-		for (int item : thuTu){
-			System.out.println(item);
-		}
-
-
-//		if (noiDung != null) {
-//			System.out.println("Nội dung của bài học có mã " + maBH + " thuộc chương " + maChuong + " là: " + noiDung);
-//		} else {
-//			System.out.println("Không tìm thấy nội dung cho bài học có mã " + maBH + " thuộc chương " + maChuong);
-//		}
 	}
 	
 }
