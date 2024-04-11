@@ -67,6 +67,7 @@
                 <configuration>
                     <source>21</source>
                     <target>21</target>
+                    <compilerArgs>--enable-preview</compilerArgs>
                 </configuration>
             </plugin>
             <plugin>
@@ -79,7 +80,7 @@
                         <id>default-cli</id>
                         <configuration>
                             <mainClass>
-                                org.example.cuoiki_code_tutorial/org.example.cuoiki_code_tutorial.View.Main
+                                org.example.cuoiki_code_tutorial/org.example.cuoiki_code_tutorial.View.BaiHocApplication
                             </mainClass>
                             <launcher>app</launcher>
                             <jlinkZipName>app</jlinkZipName>
