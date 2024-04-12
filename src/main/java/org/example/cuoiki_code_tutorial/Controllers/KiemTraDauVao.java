@@ -62,11 +62,10 @@ public class KiemTraDauVao implements Initializable {
         String maBH = "bai1";
         String maChuong = "chuong1";
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/FXML/lesson_compiler.fxml"));
-
         Parent layout2Root = loader.load();
         layout2Root.getStyleClass().add("background");
         LessonCompiler layout2Controller = loader.getController();
-        layout2Controller.showLayoutLessonCompiler(maBH, maChuong);
+        layout2Controller.loadBaiHocByMaBHMaChuong(maBH, maChuong);
         Scene layout2Scene = new Scene(layout2Root);
         Stage stage = (Stage)  btnBack.getScene().getWindow();
         stage.setScene(layout2Scene);

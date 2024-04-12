@@ -16,7 +16,7 @@ public class BaiHocApplication extends Application {
 
         String pathToFXML = "/FXML/lesson_compiler.fxml";
         FXMLLoader fxmlLoader = new FXMLLoader(BaiHocApplication.class.getResource(pathToFXML));
-
+        LessonCompiler lessonCompiler =  fxmlLoader.getController();
         AnchorPane root = new AnchorPane();
         root.getChildren().add(fxmlLoader.load());
         root.getStyleClass().add("background");

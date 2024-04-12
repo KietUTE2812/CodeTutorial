@@ -96,8 +96,6 @@ public class BaiHocDAO {
         } catch (SQLException e) {
             HandleException.printSQLException(e);
         }
-
-
         return thuTuList;
     }
 
