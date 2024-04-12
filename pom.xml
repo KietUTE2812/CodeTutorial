@@ -64,6 +64,14 @@
             <version>0.11.2</version>
         </dependency>
 
+        <!-- https://mvnrepository.com/artifact/org.python/jython -->
+        <dependency>
+            <groupId>org.python</groupId>
+            <artifactId>jython</artifactId>
+            <version>2.7.4b1</version>
+        </dependency>
+
+
     </dependencies>
 
     <build>
