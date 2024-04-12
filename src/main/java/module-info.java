@@ -5,6 +5,7 @@ module org.example.cuoiki_code_tutorial {
     requires org.kordamp.bootstrapfx.core;
     requires java.sql;
     requires javafx.web;
+    requires org.fxmisc.richtext;
 
     opens org.example.cuoiki_code_tutorial to javafx.fxml;
     exports org.example.cuoiki_code_tutorial.View;
