@@ -24,7 +24,7 @@ public class PythonExecutor {
         String code = codeArea.getText();
 
         String input = code + testcase;
-        String output = "hello";
+        String output = "hello world";
         try {
             StringWriter writer = new StringWriter();
             interpreter.setOut(writer);

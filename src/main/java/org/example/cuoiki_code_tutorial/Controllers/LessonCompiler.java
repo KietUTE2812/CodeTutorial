@@ -249,7 +249,7 @@ public class LessonCompiler implements Initializable {
 
 
     public void onClickChayThu(ActionEvent actionEvent) {
-        String testcase =  "a = calculate_area(3,4)\nprint(a)";
+        String testcase =  "a = calculate_area(3,4)\nprint(a)   ";
         String output = pythonExecutor.executeCode(testcase);
         outputArea.appendText(output);
     }
