@@ -1,7 +1,7 @@
 package org.example.cuoiki_code_tutorial.Dao;
 
 import org.example.cuoiki_code_tutorial.Models.BaiHoc;
-import org.example.cuoiki_code_tutorial.Models.Student;
+
 import org.example.cuoiki_code_tutorial.Utils.HandleException;
 import org.example.cuoiki_code_tutorial.Utils.MySQLConnection;
 

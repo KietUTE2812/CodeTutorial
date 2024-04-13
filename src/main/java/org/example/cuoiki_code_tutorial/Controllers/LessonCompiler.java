@@ -6,71 +6,100 @@ import javafx.fxml.FXML;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.geometry.Insets;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Label;
-import javafx.scene.image.ImageView;
-import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.Region;
+import javafx.scene.control.TextArea;
+import javafx.scene.layout.*;
+import javafx.scene.paint.Paint;
 import javafx.scene.web.WebEngine;
 import javafx.scene.web.WebView;
 import javafx.stage.Stage;
 import org.example.cuoiki_code_tutorial.Dao.BaiHocDAO;
+import org.example.cuoiki_code_tutorial.Models.BaiHoc;
+import org.fxmisc.richtext.CodeArea;
+import org.fxmisc.richtext.LineNumberFactory;
 
 
 import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.ResourceBundle;
+
 public class LessonCompiler implements Initializable {
     @FXML
-    private Label statusLabel;
-    @FXML
-    private AnchorPane rootPane, layoutBaiHoc;
-    @FXML
-    private BorderPane rootBorder;
-    @FXML
-    private ImageView imageView;
-
+    private AnchorPane layoutBaiHoc;
     @FXML
     private WebView wViewBaiHoc;
     @FXML
-    private Label lblTenBaiHoc;
-
+    private Label lblTenBaiHoc, lblGHKT;
     @FXML
     private Button btnMucDo;
     @FXML
-    private Button btnKiemThu1;
+    private Button btnKiemThu1, btnChayThu;
     @FXML
     private HBox hBox;
+    @FXML
+    private ChoiceBox<String> choiceBoxNgonNgu;
+    @FXML
+    private VBox vBoxCodeEditor;
+    @FXML
+    private CodeArea codeArea;
+    @FXML
+    private TextArea outputArea;
 
 
+    private BaiHoc baiHoc;
+    private KiemTraDauVao kiemTraDauVao;
     private static final BaiHocDAO baiHocDAO = new BaiHocDAO();
+    private String ngonNgu;
 
-    public LessonCompiler() {
-        this.hBox = new HBox();
-        this.wViewBaiHoc = new WebView();
-        this.lblTenBaiHoc = new Label();
-        this.btnMucDo = new Button();
-    }
+    private PythonExecutor pythonExecutor;
+
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         String pathToStyle = "/CSS/styles_baihoc.css";
         layoutBaiHoc.getStylesheets().add(getClass().getResource("/CSS/styles_baihoc.css").toExternalForm());
 
+        ObservableList<String> options = FXCollections.observableArrayList("Python", "Java", "C++");
+        choiceBoxNgonNgu.setItems(options);
+        choiceBoxNgonNgu.getSelectionModel().select(0);
+        choiceBoxNgonNgu.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
+            System.out.println("Selected item: " + newValue);
+            ngonNgu = choiceBoxNgonNgu.getSelectionModel().getSelectedItem();
+
+
+            System.out.println(ngonNgu);
+        });
+
+        setUpCodeArea();
+        pythonExecutor = new PythonExecutor(codeArea, outputArea);
+
+
+
+    }
+
+    public void setUpCodeArea() {
+        codeArea.setStyle("-fx-font-family: 'Consolas'; -fx-font-size: 14px; -fx-text-fill: #d4d4d4; ");
+        codeArea.setBackground(new Background(new BackgroundFill(Paint.valueOf("#dddddd"), CornerRadii.EMPTY, Insets.EMPTY)));
+        codeArea.setParagraphGraphicFactory(LineNumberFactory.get(codeArea));
+        codeArea.setOnKeyTyped(e -> codeArea.autosize());
+        codeArea.setOnKeyPressed(e -> codeArea.autosize());
+        codeArea.setTextInsertionStyle(Collections.singleton("-fx-background-color: red;"));
+        codeArea.showParagraphAtTop(1);
+        codeArea.setStyle("-fx-paragraph-graph-color: #d900d1;");
+
+
     }
 
     public void onBackButtonClick(ActionEvent actionEvent) throws SQLException {
-
-        String maBH = "bai1";
-        String maChuong = "chuong4";
-        loadBaiHocByMaBHMaChuong(maBH, maChuong);
 
 
     }
@@ -81,9 +110,10 @@ public class LessonCompiler implements Initializable {
     }
 
     public void getBaiHocByThuTu(int thuTu) {
+        BaiHoc baiHoc = baiHocDAO.getBaiHocByThuTu(thuTu);
 
-        String tenBH = baiHocDAO.tenBaiHocByThuTu(thuTu);
-        String noiDung = baiHocDAO.noiDungByThuTu(thuTu);
+        String tenBH = baiHoc.getTenBaiHoc();
+        String noiDung = baiHoc.getNoiDung();
         if (tenBH.length() > 50) {
             tenBH = tenBH.substring(0, 50) + "...";
         }
@@ -91,7 +121,10 @@ public class LessonCompiler implements Initializable {
         WebEngine webEngine = wViewBaiHoc.getEngine();
         webEngine.loadContent(noiDung);
 
-        String mucDo = "Vừa";
+        String mucDo = baiHoc.getMucDo();
+        int GHKT = baiHoc.getGioiHanKyTu();
+        lblGHKT.setText("Giới hạn ký tự: " + GHKT);
+
         switch (mucDo) {
             case "Dễ":
                 btnMucDo.setStyle("-fx-background-color: green;");
@@ -106,7 +139,6 @@ public class LessonCompiler implements Initializable {
                 btnMucDo.setText("Vừa");
                 break;
             default:
-
                 break;
         }
     }
@@ -151,19 +183,22 @@ public class LessonCompiler implements Initializable {
     }
 
     public void loadBaiHocByMaBHMaChuong(String maBH, String maChuong) throws SQLException {
-
         getSoLuongBaiHoc(maChuong);
+        BaiHoc baiHoc = baiHocDAO.getBaiHocByMaBHMaChuong(maBH, maChuong);
 
-        WebEngine webEngine = wViewBaiHoc.getEngine();
-        String tenBaiHoc = baiHocDAO.tenBaiHoc(maBH, maChuong);
-        String noiDung = baiHocDAO.noiDungBaiHoc(maBH, maChuong);
-        webEngine.loadContent(noiDung);
-        if (tenBaiHoc.length() > 50) {
-            tenBaiHoc = tenBaiHoc.substring(0, 50) + "...";
+        String tenBH = baiHoc.getTenBaiHoc();
+        String noiDung = baiHoc.getNoiDung();
+        if (tenBH.length() > 50) {
+            tenBH = tenBH.substring(0, 50) + "...";
         }
-        lblTenBaiHoc.setText(tenBaiHoc);
-        System.out.println("tenbai: " + tenBaiHoc);
-        String mucDo = "Khó";
+        lblTenBaiHoc.setText(tenBH);
+        WebEngine webEngine = wViewBaiHoc.getEngine();
+        webEngine.loadContent(noiDung);
+
+        String mucDo = baiHoc.getMucDo();
+        int GHKT = baiHoc.getGioiHanKyTu();
+        lblGHKT.setText("Giới hạn ký tự: " + GHKT);
+
         switch (mucDo) {
             case "Dễ":
                 btnMucDo.setStyle("-fx-background-color: green;");
@@ -184,4 +219,10 @@ public class LessonCompiler implements Initializable {
     }
 
 
+    public void onClickChayThu(ActionEvent actionEvent) {
+        String testcse = "a = calculate_area(3,4)\nprint a";
+        String output = pythonExecutor.executeCode(testcse);
+        outputArea.appendText(output);
+
+    }
 }

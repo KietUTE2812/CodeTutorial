@@ -38,7 +38,7 @@ public class ChuongController implements Initializable {
             List<BaiHoc> baiHoc = chuongDAO.getAllBaiHoc(chuong.getMaChuong());
             for (BaiHoc bai : baiHoc)
             {
-                Button btn = new Button("Bài " + bai.getThuTu() + ": " +bai.getTenBH());
+                Button btn = new Button("Bài " + bai.getThuTu() + ": " +bai.getTenBaiHoc());
                 btn.setPrefWidth(600);
 //                btn.setTextAlignment(TextAlignment.LEFT);
                 vBoxCacBaiHoc.getChildren().add(btn);
