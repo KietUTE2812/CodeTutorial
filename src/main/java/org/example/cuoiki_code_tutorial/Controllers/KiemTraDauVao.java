@@ -60,7 +60,7 @@ public class KiemTraDauVao implements Initializable {
     @FXML
     public void goBaiHocLayout() throws SQLException, IOException {
         String maBH = "bai1";
-        String maChuong = "chuong1";
+        String maChuong = "chuong6";
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/FXML/lesson_compiler.fxml"));
 
         Parent layout2Root = loader.load();

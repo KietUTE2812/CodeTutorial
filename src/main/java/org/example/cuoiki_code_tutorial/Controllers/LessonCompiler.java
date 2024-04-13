@@ -12,6 +12,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Label;
+import javafx.scene.control.TextArea;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Paint;
 import javafx.scene.web.WebEngine;
@@ -24,12 +25,15 @@ import org.fxmisc.richtext.LineNumberFactory;
 
 
 import java.io.IOException;
+import java.io.StringWriter;
 import java.net.URL;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.ResourceBundle;
+
+
 
 public class LessonCompiler implements Initializable {
     @FXML
@@ -41,15 +45,14 @@ public class LessonCompiler implements Initializable {
     @FXML
     private Button btnMucDo;
     @FXML
-    private Button btnKiemThu1;
+    private Button btnKiemThu1, btnChayThu;
     @FXML
     private HBox hBox;
     @FXML
     private ChoiceBox<String> choiceBoxNgonNgu;
     @FXML
     private VBox vBoxCodeEditor;
-    @FXML
-    private CodeArea codeArea;
+
 
 
     private BaiHoc baiHoc;
@@ -57,9 +60,39 @@ public class LessonCompiler implements Initializable {
     private static final BaiHocDAO baiHocDAO = new BaiHocDAO();
     private String ngonNgu;
 
+    private PythonExecutor pythonExecutor;
 
 
 
+
+    @FXML
+    private  CodeArea codeArea;
+    @FXML
+    private  TextArea outputArea;
+
+    public LessonCompiler() {
+    }
+
+//    public LessonCompiler(CodeArea codeArea, TextArea outputArea ) {
+//        this.codeArea = codeArea;
+//        this.outputArea = outputArea;
+//        interpreter = new PythonInterpreter();
+//    }
+
+//    public String executeCode() {
+//        String code = codeArea.getText();
+//        String output;
+//        try {
+//            StringWriter writer = new StringWriter();
+//            interpreter.setOut(writer);
+//            interpreter.exec(code);
+//            output = writer.toString();
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//            output = e.getMessage();
+//        }
+//        return output;
+//    }
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -79,6 +112,9 @@ public class LessonCompiler implements Initializable {
 
         setUpCodeArea();
 
+        pythonExecutor = new PythonExecutor(codeArea, outputArea);
+
+
     }
 
     public void setUpCodeArea() {
@@ -90,10 +126,6 @@ public class LessonCompiler implements Initializable {
         codeArea.setTextInsertionStyle(Collections.singleton("-fx-background-color: red;"));
         codeArea.showParagraphAtTop(1);
         codeArea.setStyle("-fx-paragraph-graph-color: #d900d1;");
-
-
-
-
     }
 
     public void onBackButtonClick(ActionEvent actionEvent) throws SQLException {
@@ -216,8 +248,9 @@ public class LessonCompiler implements Initializable {
     }
 
 
-
-
-
-
+    public void onClickChayThu(ActionEvent actionEvent) {
+        String testcase =  "a = calculate_area(3,4)\nprint(a)";
+        String output = pythonExecutor.executeCode(testcase);
+        outputArea.appendText(output);
+    }
 }

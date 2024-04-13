@@ -6,6 +6,7 @@ module org.example.cuoiki_code_tutorial {
     requires java.sql;
     requires javafx.web;
     requires org.fxmisc.richtext;
+    requires jython;
 
     opens org.example.cuoiki_code_tutorial to javafx.fxml;
     exports org.example.cuoiki_code_tutorial.View;
