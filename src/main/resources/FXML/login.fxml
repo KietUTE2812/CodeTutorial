@@ -26,7 +26,7 @@
                   <Font size="18.0" />
                </font>
             </TextField>
-            <Button fx:id="btnDangNhap" layoutX="122.0" layoutY="354.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="170.0" styleClass="login-btn" stylesheets="@../CSS/login_registerDesign.css" text="Sign In">
+            <Button fx:id="btnDangNhap" layoutX="122.0" layoutY="354.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="170.0" styleClass="login-btn" stylesheets="@../CSS/login_registerDesign.css" text="Đăng Nhập">
                <font>
                   <Font size="18.0" />
                </font>
@@ -51,22 +51,22 @@
                   <Font size="30.0" />
                </font>
             </Label>
-            <Label layoutX="104.0" layoutY="448.0" text="Don't have an account? ">
+            <Label layoutX="104.0" layoutY="448.0" text="Bạn Chưa Có Tài Khoản?">
                <font>
                   <Font size="15.0" />
                </font>
             </Label>
-            <Label fx:id="labelDangKi" layoutX="262.0" layoutY="448.0" prefHeight="22.0" prefWidth="70.0" text="Sign Up" textFill="#69bfbf">
+            <Label fx:id="labelDangKi" layoutX="268.0" layoutY="447.0" prefHeight="22.0" prefWidth="76.0" text="Đăng Ký" textFill="#69bfbf">
                <font>
                   <Font size="15.0" />
                </font>
             </Label>
-            <Label layoutX="112.0" layoutY="422.0" text="Forgot">
+            <Label layoutX="122.0" layoutY="422.0" text="Quên ">
                <font>
                   <Font size="15.0" />
                </font>
             </Label>
-            <Label fx:id="labelQuenMatKhau" layoutX="161.0" layoutY="422.0" prefHeight="22.0" prefWidth="150.0" text="Username/Password?" textFill="#31bca2">
+            <Label fx:id="labelQuenMatKhau" layoutX="161.0" layoutY="422.0" prefHeight="22.0" prefWidth="150.0" text="Tài Khoản/Mật Khẩu?" textFill="#31bca2">
                <font>
                   <Font size="15.0" />
                </font>
