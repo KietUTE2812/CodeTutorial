@@ -29,21 +29,28 @@ import java.util.ResourceBundle;
 public class TrangChuController implements Initializable {
     @FXML
     private ScrollPane scrollPane;
+    @FXML
+    private HBox hBox;
 
     private void loadKhoaHoc() {
 
+        hBox.setSpacing(100);
+        hBox.setAlignment(Pos.CENTER);
+
         KhoaHocDAO khoaHocDAO = new KhoaHocDAO();
-        HBox hBox = new HBox();
         List<KhoaHoc> khs = khoaHocDAO.getAllKhoaHoc();
 
         for(KhoaHoc khoaHoc : khs) {
             VBox vBox = new VBox();
+            vBox.setId("vBoxKhoaHoc");
             vBox.setPrefWidth(200);
             vBox.setPadding(new Insets(10, 10, 10, 10));
             vBox.setAlignment(Pos.CENTER);
             ImageView imageView = new ImageView(khoaHoc.getHinhAnh());
             imageView.setFitWidth(300);
             imageView.setFitHeight(200);
+            imageView.setSmooth(true);
+
             Label tenKH = new Label(khoaHoc.getTenKH());
             tenKH.setAlignment(Pos.CENTER);
             Label tacGia = new Label(khoaHoc.getMaAD());
@@ -78,8 +85,6 @@ public class TrangChuController implements Initializable {
             vBox.getChildren().addAll(imageView, tenKH, tacGia, ngayTao, button);
             hBox.getChildren().add(vBox);
         }
-        scrollPane.setContent(hBox);
-        scrollPane.setVbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
     }
 
     @Override

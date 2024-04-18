@@ -49,6 +49,12 @@ public class LessonCompiler implements Initializable {
     @FXML
     private HBox hBox;
 
+    private String maBH, maChuong;
+
+    public LessonCompiler(String maBH, String maChuong) {
+        this.maBH = maBH;
+        this.maChuong = maChuong;
+    }
 
     private static final BaiHocDAO baiHocDAO = new BaiHocDAO();
 
@@ -63,13 +69,17 @@ public class LessonCompiler implements Initializable {
     public void initialize(URL url, ResourceBundle resourceBundle) {
         String pathToStyle = "/CSS/styles_baihoc.css";
         layoutBaiHoc.getStylesheets().add(getClass().getResource("/CSS/styles_baihoc.css").toExternalForm());
-
+        try {
+            loadBaiHocByMaBHMaChuong(maBH, maChuong);
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     public void onBackButtonClick(ActionEvent actionEvent) throws SQLException {
 
-        String maBH = "bai1";
-        String maChuong = "chuong4";
+//        String maBH = "bai1";
+//        String maChuong = "chuong4";
         loadBaiHocByMaBHMaChuong(maBH, maChuong);
 
 

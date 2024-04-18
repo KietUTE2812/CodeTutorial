@@ -1,10 +1,16 @@
 package org.example.cuoiki_code_tutorial.Controllers;
 
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.layout.VBox;
 import javafx.fxml.FXML;
 import javafx.scene.text.TextAlignment;
+import javafx.stage.Stage;
 import org.example.cuoiki_code_tutorial.Dao.ChuongDAO;
 import org.example.cuoiki_code_tutorial.Models.BaiHoc;
 import org.example.cuoiki_code_tutorial.Models.Chuong;
@@ -39,6 +45,30 @@ public class ChuongController implements Initializable {
             for (BaiHoc bai : baiHoc)
             {
                 Button btn = new Button("Bài " + bai.getThuTu() + ": " +bai.getTenBH());
+                btn.setOnAction(new EventHandler<ActionEvent>() {
+                    @Override
+                    public void handle(ActionEvent event) {
+                        try {
+                            // Load FXML file
+                            FXMLLoader loader = new FXMLLoader(getClass().getResource("/FXML/lesson_compiler.fxml"));
+                            LessonCompiler ls = new LessonCompiler(bai.getMaBH(), bai.getMaChuong());
+                            loader.setController(ls);
+                            Parent root = loader.load();
+
+                            // Create new scene
+                            Scene scene = new Scene(root);
+
+                            // Get the stage
+                            Stage stage = (Stage) btn.getScene().getWindow();
+
+                            // Set the new scene
+                            stage.setScene(scene);
+                            stage.show();
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+                    }
+                });
                 btn.setPrefWidth(600);
 //                btn.setTextAlignment(TextAlignment.LEFT);
                 vBoxCacBaiHoc.getChildren().add(btn);
