@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane xmlns="http://javafx.com/javafx"
+            xmlns:fx="http://javafx.com/fxml"
+            fx:controller="org.example.cuoiki_code_tutorial.Controllers.UserHomeController"
+            prefHeight="600.0" prefWidth="1000.0">
+    <AnchorPane fx:id="header" prefHeight="40.0" prefWidth="1000.0">
+
+    </AnchorPane>
+    <AnchorPane fx:id="account" layoutY="40" layoutX="0" prefHeight="160.0" prefWidth="1000.0">
+
+    </AnchorPane>
+    <AnchorPane fx:id="courses" layoutY="200" layoutX="0" prefHeight="240.0" prefWidth="1000.0">
+        <AnchorPane fx:id="SuggestedCourses" layoutY="200" layoutX="0" prefHeight="240.0" prefWidth="1000.0">
+
+        </AnchorPane>
+
+    </AnchorPane>
+    <AnchorPane fx:id="skill" layoutY="440" layoutX="0" prefHeight="160.0" prefWidth="1000.0">
+
+    </AnchorPane>
+
+</AnchorPane>
