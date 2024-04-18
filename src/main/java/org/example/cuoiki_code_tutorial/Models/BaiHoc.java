@@ -11,6 +11,24 @@ public class BaiHoc {
     private int trangThai;
     private int gioiHanKyTu;
     private String mucDo;
+    private String codeMau;
+    private String maKhoaHoc;
+
+    public String getMaKhoaHoc() {
+        return maKhoaHoc;
+    }
+
+    public void setMaKhoaHoc(String maKhoaHoc) {
+        this.maKhoaHoc = maKhoaHoc;
+    }
+
+    public String getCodeMau() {
+        return codeMau;
+    }
+
+    public void setCodeMau(String codeMau) {
+        this.codeMau = codeMau;
+    }
 
     public BaiHoc(String id, String tenBaiHoc, String noiDung, int thoiLuong, String maChuong, int thuTu, int trangThai) {
         this.tenBaiHoc = tenBaiHoc;
@@ -40,11 +58,12 @@ public class BaiHoc {
         this.gioiHanKyTu = gioiHanKyTu;
     }
 
-    public BaiHoc( String tenBaiHoc, String noiDung, int gioiHanKyTu, String mucDo) {
+    public BaiHoc( String tenBaiHoc, String noiDung, int gioiHanKyTu, String mucDo, String codeMau) {
         this.tenBaiHoc = tenBaiHoc;
         this.noiDung = noiDung;
         this.gioiHanKyTu = gioiHanKyTu;
         this.mucDo = mucDo;
+        this.codeMau = codeMau;
     }
 
     public BaiHoc() {

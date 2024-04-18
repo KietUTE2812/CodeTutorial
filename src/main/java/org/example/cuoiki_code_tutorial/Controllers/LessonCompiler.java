@@ -40,7 +40,7 @@ public class LessonCompiler implements Initializable {
     @FXML
     private Label lblTenBaiHoc, lblGHKT;
     @FXML
-    private Button btnMucDo;
+    private Button btnMucDo, btnBack;
     @FXML
     private Button btnKiemThu1, btnChayThu;
     @FXML
@@ -82,6 +82,8 @@ public class LessonCompiler implements Initializable {
         setUpCodeArea();
         pythonExecutor = new PythonExecutor(codeArea, outputArea);
 
+        codeArea.replaceText("...\nA simple Python program to display Hello, World! on the screen\nusing");
+
 
 
     }
@@ -96,11 +98,10 @@ public class LessonCompiler implements Initializable {
         codeArea.showParagraphAtTop(1);
         codeArea.setStyle("-fx-paragraph-graph-color: #d900d1;");
 
-
     }
 
-    public void onBackButtonClick(ActionEvent actionEvent) throws SQLException {
-
+    public void onBackButtonClick(ActionEvent actionEvent) throws SQLException, IOException {
+        goChuongBaiHoc();
 
     }
 
@@ -124,6 +125,10 @@ public class LessonCompiler implements Initializable {
         String mucDo = baiHoc.getMucDo();
         int GHKT = baiHoc.getGioiHanKyTu();
         lblGHKT.setText("Giới hạn ký tự: " + GHKT);
+
+        String codeMau = baiHoc.getCodeMau();
+        codeArea.replaceText(codeMau);
+        System.out.println(codeMau);
 
         switch (mucDo) {
             case "Dễ":
@@ -198,6 +203,9 @@ public class LessonCompiler implements Initializable {
         String mucDo = baiHoc.getMucDo();
         int GHKT = baiHoc.getGioiHanKyTu();
         lblGHKT.setText("Giới hạn ký tự: " + GHKT);
+        String codeMau = baiHoc.getCodeMau();
+
+        codeArea.replaceText(codeMau);
 
         switch (mucDo) {
             case "Dễ":
@@ -220,9 +228,28 @@ public class LessonCompiler implements Initializable {
 
 
     public void onClickChayThu(ActionEvent actionEvent) {
-        String testcse = "a = calculate_area(3,4)\nprint a";
+        String testcse = "";
         String output = pythonExecutor.executeCode(testcse);
         outputArea.appendText(output);
 
+    }
+
+    @FXML
+    public void goChuongBaiHoc() throws SQLException, IOException {
+
+
+
+        try {
+            Parent root = FXMLLoader.load(getClass().getResource("/FXML/chuong.fxml"));
+            root.getStyleClass().add("background");
+            Scene scene = new Scene(root, 1000, 600);
+            // Kết nối tệp CSS với scene
+            String pathToStyle = "/CSS/chuongCss.css";
+            scene.getStylesheets().add(getClass().getResource(pathToStyle).toExternalForm());
+            Stage stage = (Stage) btnBack.getScene().getWindow();
+            stage.setScene(scene);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 }

@@ -34,8 +34,9 @@ public class BaiHocDAO {
                 String noiDung = rs.getString("NoiDung");
                 int GHKT = rs.getInt("GioiHanKyTu");
                 String mucDo = rs.getString("MucDo");
+                String codeMau = rs.getString("CodeMau");
 
-                baiHoc = new BaiHoc(tenBaiHoc, noiDung, GHKT, mucDo);
+                baiHoc = new BaiHoc(tenBaiHoc, noiDung, GHKT, mucDo, codeMau);
             }
             rs.close();
             preparedStatement.close();
@@ -66,7 +67,9 @@ public class BaiHocDAO {
                 int GHKT = rs.getInt("GioiHanKyTu");
                 String mucDo = rs.getString("MucDo");
 
-                baiHoc = new BaiHoc(tenBaiHoc, noiDung, GHKT, mucDo);
+                String codeMau = rs.getString("CodeMau");
+
+                baiHoc = new BaiHoc(tenBaiHoc, noiDung, GHKT, mucDo, codeMau);
             }
             rs.close();
             preparedStatement.close();
