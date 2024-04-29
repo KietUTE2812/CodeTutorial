@@ -12,6 +12,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Label;
+import javafx.scene.control.TextArea;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Paint;
 import javafx.scene.web.WebEngine;
@@ -39,9 +40,9 @@ public class LessonCompiler implements Initializable {
     @FXML
     private Label lblTenBaiHoc, lblGHKT;
     @FXML
-    private Button btnMucDo;
+    private Button btnMucDo, btnBack;
     @FXML
-    private Button btnKiemThu1;
+    private Button btnKiemThu1, btnChayThu;
     @FXML
     private HBox hBox;
     @FXML
@@ -50,6 +51,8 @@ public class LessonCompiler implements Initializable {
     private VBox vBoxCodeEditor;
     @FXML
     private CodeArea codeArea;
+    @FXML
+    private TextArea outputArea;
 
 
     private BaiHoc baiHoc;
@@ -57,8 +60,7 @@ public class LessonCompiler implements Initializable {
     private static final BaiHocDAO baiHocDAO = new BaiHocDAO();
     private String ngonNgu;
 
-
-
+    private PythonExecutor pythonExecutor;
 
 
     @Override
@@ -69,15 +71,20 @@ public class LessonCompiler implements Initializable {
         ObservableList<String> options = FXCollections.observableArrayList("Python", "Java", "C++");
         choiceBoxNgonNgu.setItems(options);
         choiceBoxNgonNgu.getSelectionModel().select(0);
-        choiceBoxNgonNgu.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) ->{
+        choiceBoxNgonNgu.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
             System.out.println("Selected item: " + newValue);
             ngonNgu = choiceBoxNgonNgu.getSelectionModel().getSelectedItem();
 
 
             System.out.println(ngonNgu);
-        } );
+        });
 
         setUpCodeArea();
+        pythonExecutor = new PythonExecutor(codeArea, outputArea);
+
+        codeArea.replaceText("...\nA simple Python program to display Hello, World! on the screen\nusing");
+
+
 
     }
 
@@ -91,13 +98,14 @@ public class LessonCompiler implements Initializable {
         codeArea.showParagraphAtTop(1);
         codeArea.setStyle("-fx-paragraph-graph-color: #d900d1;");
 
-
-
-
     }
 
-    public void onBackButtonClick(ActionEvent actionEvent) throws SQLException {
-
+    public void onBackButtonClick(ActionEvent actionEvent) throws SQLException, IOException {
+        //goChuongBaiHoc();
+        String pathToStyle = "/CSS/chuongCss.css";
+        String resPath = "/FXML/chuong.fxml";
+        Stage stage = (Stage) btnBack.getScene().getWindow();
+        SceneLoader.loadScene(resPath, pathToStyle,stage);
 
     }
 
@@ -121,6 +129,10 @@ public class LessonCompiler implements Initializable {
         String mucDo = baiHoc.getMucDo();
         int GHKT = baiHoc.getGioiHanKyTu();
         lblGHKT.setText("Giới hạn ký tự: " + GHKT);
+
+        String codeMau = baiHoc.getCodeMau();
+        codeArea.replaceText(codeMau);
+        System.out.println(codeMau);
 
         switch (mucDo) {
             case "Dễ":
@@ -195,6 +207,9 @@ public class LessonCompiler implements Initializable {
         String mucDo = baiHoc.getMucDo();
         int GHKT = baiHoc.getGioiHanKyTu();
         lblGHKT.setText("Giới hạn ký tự: " + GHKT);
+        String codeMau = baiHoc.getCodeMau();
+
+        codeArea.replaceText(codeMau);
 
         switch (mucDo) {
             case "Dễ":
@@ -216,8 +231,27 @@ public class LessonCompiler implements Initializable {
     }
 
 
+    public void onClickChayThu(ActionEvent actionEvent) {
+        String testcse = "";
+        String output = pythonExecutor.executeCode(testcse);
+        outputArea.appendText(output);
 
+    }
 
-
-
+    @FXML
+    public void goChuongBaiHoc() throws SQLException, IOException {
+        try {
+            Parent root = FXMLLoader.load(getClass().getResource("/FXML/chuong.fxml"));
+            root.getStyleClass().add("background");
+            Scene scene = new Scene(root, 1000, 600);
+            // Kết nối tệp CSS với scene
+            String pathToStyle = "/CSS/chuongCss.css";
+            String resPath = "/FXML/chuong.fxml";
+            scene.getStylesheets().add(getClass().getResource(pathToStyle).toExternalForm());
+            Stage stage = (Stage) btnBack.getScene().getWindow();
+            stage.setScene(scene);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 }

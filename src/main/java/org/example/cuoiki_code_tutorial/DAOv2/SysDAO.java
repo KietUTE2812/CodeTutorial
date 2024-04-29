@@ -1,4 +1,4 @@
-package org.example.cuoiki_code_tutorial.DAO_object;
+package org.example.cuoiki_code_tutorial.DAOv2;
 
 import java.util.List;
 
@@ -9,4 +9,5 @@ abstract public class SysDAO<EntityType, KeyType> {
     abstract public EntityType selectById(KeyType id);
     abstract public List<EntityType> selectAll();
     abstract protected List<EntityType> selectBySql(String sql, Object...args);
+
 }

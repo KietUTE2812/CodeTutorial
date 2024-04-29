@@ -6,10 +6,10 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 
-public class TrangChuApplication extends Application {
+public class AllKhoaHocApplication extends Application {
     @Override
     public void start(Stage primaryStage) throws Exception {
-        Parent root = FXMLLoader.load(getClass().getResource("/FXML/trang_chu.fxml"));
+        Parent root = FXMLLoader.load(getClass().getResource("/FXML/all_khoa_hoc.fxml"));
         primaryStage.setTitle("Học Code Cho Người Mới Bắt Đầu");
         primaryStage.setScene(new Scene(root, 1000, 600));
         primaryStage.show();

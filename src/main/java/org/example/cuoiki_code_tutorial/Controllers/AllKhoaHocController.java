@@ -12,23 +12,24 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
-import javafx.scene.control.TextField;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
-import javafx.scene.web.WebEngine;
-import javafx.scene.web.WebView;
 import javafx.stage.Stage;
 import org.example.cuoiki_code_tutorial.Dao.KhoaHocDAO;
 import org.example.cuoiki_code_tutorial.Models.KhoaHoc;
 
+import java.io.IOException;
 import java.net.URL;
 import java.util.List;
 import java.util.ResourceBundle;
 
-public class TrangChuController implements Initializable {
+public class AllKhoaHocController implements Initializable {
     @FXML
     private ScrollPane scrollPane;
+    @FXML
+    private ImageView imglogoCodeLearn, imglogout;
 
     private void loadKhoaHoc() {
 
@@ -55,21 +56,7 @@ public class TrangChuController implements Initializable {
                 @Override
                 public void handle(ActionEvent event) {
                     try {
-                        // Load FXML file
-                        FXMLLoader loader = new FXMLLoader(getClass().getResource("/FXML/gioiThieuKhoaHoc.fxml"));
-                        KhoaHocController gioiThieuKhoaHocController = new KhoaHocController(khoaHoc.getMaKH());
-                        loader.setController(gioiThieuKhoaHocController);
-                        Parent root = loader.load();
-
-                        // Create new scene
-                        Scene scene = new Scene(root);
-
-                        // Get the stage
-                        Stage stage = (Stage) button.getScene().getWindow();
-
-                        // Set the new scene
-                        stage.setScene(scene);
-                        stage.show();
+                        loadGTKH(khoaHoc, button);
                     } catch (Exception e) {
                         e.printStackTrace();
                     }
@@ -84,6 +71,42 @@ public class TrangChuController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        Image imgLogo = new Image(getClass().getResource("/Image/logo_codelearn.png").toString());
+        Image imgLogout = new Image(getClass().getResource("/Image/logout.png").toString());
+        imglogoCodeLearn.setImage(imgLogo);
+        imglogout.setImage(imgLogout);
+
+        imglogoCodeLearn.setOnMouseClicked(e->{
+            String resPath = "/FXML/user_home.fxml";
+            String cssPath = "/CSS/styles_userhome.css";
+            Stage stage = (Stage) imglogoCodeLearn.getScene().getWindow();
+            SceneLoader.loadScene(resPath, cssPath, stage);
+        });
+
         loadKhoaHoc();
+    }
+
+    public void loadGTKH(KhoaHoc khoaHoc, Button button) {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/FXML/gioiThieuKhoaHoc.fxml"));
+        GioiThieuKhoaHocController gioiThieuKhoaHocController = new GioiThieuKhoaHocController(khoaHoc.getMaKH());
+        loader.setController(gioiThieuKhoaHocController);
+        Parent root = null;
+        try {
+            root = loader.load();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+
+        // Create new scene
+        Scene scene = new Scene(root);
+
+        // Get the stage
+        Stage stage = (Stage) button.getScene().getWindow();
+        String pathToStyle = "/CSS/styles_GTKhoaHoc.css";
+        scene.getStylesheets().add(getClass().getResource(pathToStyle).toExternalForm());
+
+        // Set the new scene
+        stage.setScene(scene);
+        stage.show();
     }
 }

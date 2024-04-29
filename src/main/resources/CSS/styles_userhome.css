@@ -1,0 +1,16 @@
+#header {
+    -fx-background-color: #ffffff;
+}
+#account
+{
+    -fx-background-color: #1e2a55;
+}
+#paneAccount
+{
+    -fx-background-color: #35416e;
+}
+
+.vbox-background {
+    -fx-background-color: #f0f0f0; /* Màu nền */
+    -fx-background-radius: 5; /* Độ cong của góc */
+}

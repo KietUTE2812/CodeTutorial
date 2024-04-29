@@ -1,6 +1,7 @@
 package org.example.cuoiki_code_tutorial.View;
 
 import javafx.application.Application;
+import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.layout.*;
@@ -11,46 +12,29 @@ import javafx.scene.canvas.*;
 import javafx.scene.web.*;
 import javafx.scene.Group;
 
+import java.io.IOException;
+
 public class demo extends Application {
 
-    // launch the application
-    public void start(Stage stage)
-    {
-        try {
+    @Override
+    public void start(Stage stage) throws IOException {
 
-            // set title for the stage
-            stage.setTitle("creating Webview");
+        String pathToFXML = "/FXML/user_home.fxml";
+        FXMLLoader fxmlLoader = new FXMLLoader(BaiHocApplication.class.getResource(pathToFXML));
 
-            // create a webview object
-            WebView w = new WebView();
-
-            // get the web engine
-            WebEngine e = w.getEngine();
-
-            // load a website
-            e.load("https://www.geeksforgeeks.org");
-
-            // create a scene
-            Scene scene = new Scene(w, w.getPrefWidth(),
-                    w.getPrefHeight());
-
-            // set the scene
-            stage.setScene(scene);
-
-            stage.show();
-        }
-
-        catch (Exception e) {
-
-            System.out.println(e.getMessage());
-        }
+        AnchorPane root = new AnchorPane();
+        root.getChildren().add(fxmlLoader.load());
+        root.getStyleClass().add("background");
+        Scene scene = new Scene(root, 1000, 600);
+        // Kết nối tệp CSS với scene
+        String pathToStyle = "/CSS/styles_userhome.css";
+        scene.getStylesheets().add(getClass().getResource(pathToStyle).toExternalForm());
+        stage.setTitle("Code Tutorial");
+        stage.setScene(scene);
+        stage.show();
     }
 
-    // Main Method
-    public static void main(String args[])
-    {
-
-        // launch the application
-        launch(args);
+    public static void main(String[] args) {
+        launch();
     }
 }

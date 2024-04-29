@@ -2,6 +2,8 @@ package org.example.cuoiki_code_tutorial.Controllers;
 
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.VBox;
 import javafx.fxml.FXML;
 import javafx.scene.text.TextAlignment;
@@ -19,6 +21,8 @@ public class ChuongController implements Initializable {
     private VBox chuongContainer;//root
     @FXML
     private ScrollPane scrollPane;
+    @FXML
+    private ImageView imglogoCodeLearn, imglogout;
 
     Accordion accordion = new Accordion();
 
@@ -60,6 +64,17 @@ public class ChuongController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        Image imgLogo = new Image(getClass().getResource("/Image/logo_codelearn.png").toString());
+        Image imgLogout = new Image(getClass().getResource("/Image/logout.png").toString());
+        imglogoCodeLearn.setImage(imgLogo);
+        imglogout.setImage(imgLogout);
+
+        imglogoCodeLearn.setOnMouseClicked(e->{
+            String resPath = "/FXML/user_home.fxml";
+            String cssPath = "/CSS/styles_userhome.css";
+            Stage stage = (Stage) imglogoCodeLearn.getScene().getWindow();
+            SceneLoader.loadScene(resPath, cssPath, stage);
+        });
         loadAllChuong();
     }
 }

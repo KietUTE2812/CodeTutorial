@@ -4,7 +4,6 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
@@ -15,8 +14,6 @@ import javafx.scene.web.WebEngine;
 import javafx.scene.web.WebView;
 import javafx.stage.Stage;
 import org.example.cuoiki_code_tutorial.Dao.BaiHocDAO;
-import org.example.cuoiki_code_tutorial.Models.BaiHoc;
-import org.example.cuoiki_code_tutorial.View.BaiHocApplication;
 
 import java.io.IOException;
 import java.net.URL;
@@ -34,42 +31,45 @@ public class KiemTraDauVao implements Initializable {
     @FXML
     private Label lblTenBaiHoc;
 
-    private BaiHoc baiHoc;
-    private LessonCompiler lessonCompiler;
-
-    public void onClickGoBack(ActionEvent actionEvent) throws SQLException, IOException {
+    public void onClickGoBack(ActionEvent actionEvent) throws SQLException {
         goBaiHocLayout();
-    }
-
-    public KiemTraDauVao(BaiHoc baiHoc, LessonCompiler lessonCompiler) {
-        this.baiHoc = baiHoc;
-        this.lessonCompiler = lessonCompiler;
-    }
-
-    public KiemTraDauVao() {
     }
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
 
+    }
 
-    }
-    public void setLayout2Controller(LessonCompiler controller) {
-        this.lessonCompiler = controller;
-    }
-    @FXML
-    public void goBaiHocLayout() throws SQLException, IOException {
+
+    public void goBaiHocLayout() throws SQLException {
+        hBox = new HBox();
+        wViewBaiHoc = new WebView();
+        lblTenBaiHoc = new Label();
+        btnMucDo = new Button();
+        LessonCompiler lessonCompiler = new LessonCompiler();
         String maBH = "bai1";
         String maChuong = "chuong1";
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/FXML/lesson_compiler.fxml"));
-        Parent layout2Root = loader.load();
-        layout2Root.getStyleClass().add("background");
-        LessonCompiler layout2Controller = loader.getController();
-        layout2Controller.loadBaiHocByMaBHMaChuong(maBH, maChuong);
-        Scene layout2Scene = new Scene(layout2Root);
-        Stage stage = (Stage)  btnBack.getScene().getWindow();
-        stage.setScene(layout2Scene);
-        stage.show();
+        try {
+            lessonCompiler.loadBaiHocByMaBHMaChuong(maBH, maChuong);
+            // Chuyển sang layout bài học
+            Parent root = FXMLLoader.load(getClass().getResource("/FXML/lesson_compiler.fxml"));
+            root.getStyleClass().add("background");
+            Scene scene = new Scene(root, 1000, 600);
+
+            // Kết nối tệp CSS với scene
+            String pathToStyle = "/CSS/styles_baihoc.css";
+            scene.getStylesheets().add(getClass().getResource(pathToStyle).toExternalForm());
+            Stage stage = (Stage) btnBack.getScene().getWindow();
+            stage.setScene(scene);
+        } catch (IOException e) {
+            e.printStackTrace();
+            // Hiển thị thông báo lỗi cho người dùng
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Lỗi");
+            alert.setHeaderText("Có lỗi xảy ra khi chuyển sang layout bài học");
+            alert.setContentText(e.getMessage());
+            alert.showAndWait();
+        }
     }
 
 
