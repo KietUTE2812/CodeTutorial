@@ -1,4 +1,4 @@
-package org.example.cuoiki_code_tutorial.Dao;
+package org.example.cuoiki_code_tutorial.Dao.DucNhan;
 
 import org.example.cuoiki_code_tutorial.Models.TaiKhoan;
 import org.example.cuoiki_code_tutorial.Utils.HandleException;
@@ -7,7 +7,7 @@ import org.example.cuoiki_code_tutorial.Utils.MySQLConnection;
 
 import java.sql.*;
 
-public class DangNhapDao {
+public class LoginDAO {
 
    private static final String DANG_NHAP="SELECT * FROM taikhoan WHERE TrangThai = 1 AND TenDangNhap = ? AND MatKhau = ? AND VaiTro=?";
 

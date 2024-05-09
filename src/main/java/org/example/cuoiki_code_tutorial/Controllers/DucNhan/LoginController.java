@@ -1,4 +1,4 @@
-package org.example.cuoiki_code_tutorial.Controllers;
+package org.example.cuoiki_code_tutorial.Controllers.DucNhan;
 
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -7,10 +7,10 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
-import javafx.scene.input.KeyEvent;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
-import org.example.cuoiki_code_tutorial.Dao.DangNhapDao;
+import org.example.cuoiki_code_tutorial.Dao.DucNhan.LoginDAO;
 import org.example.cuoiki_code_tutorial.Models.TaiKhoan;
 import org.example.cuoiki_code_tutorial.Utils.Session;
 
@@ -18,9 +18,8 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-public class DangNhapController implements Initializable {
-    @FXML
-    private Button btnBackApp;
+public class LoginController implements Initializable {
+
 
     @FXML
     private Button btnDangNhap;
@@ -46,9 +45,15 @@ public class DangNhapController implements Initializable {
     @FXML
     private TextField txtTenDangNhap;
 
+    @FXML
+    private TextField txtShowPass;
+    @FXML
+    private ImageView hidePass;
+    @FXML
+    private ImageView viewPass;
 
     //gọi DAO
-    private DangNhapDao dangNhapDao;
+    private LoginDAO dangNhapDao;
 
 
     // biến check vai trò
@@ -56,7 +61,7 @@ public class DangNhapController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        dangNhapDao = new DangNhapDao();
+        dangNhapDao = new LoginDAO();
         btnDangNhap.setOnAction(ActionEvent->dangnhap());
         labelDangKi.setOnMouseClicked(ActionEvent-> {
             try {
@@ -75,6 +80,8 @@ public class DangNhapController implements Initializable {
             rdHocVien.setSelected(true);
             rdQuanTriVien.setSelected(false);
         });
+        viewPass.setOnMouseClicked(ActionEvent->setViewPass());
+        hidePass.setOnMouseClicked(ActionEvent->setHidePass());
 
     }
 
@@ -102,7 +109,7 @@ public class DangNhapController implements Initializable {
 //                    alert.setContentText("Bạn đang đăng nhập với tư cách là Học Viên!");
 //                    alert.showAndWait();
                     btnDangNhap.getScene().getWindow().hide();
-                    Parent root = FXMLLoader.load(getClass().getResource("/FXML/user.fxml"));
+                    Parent root = FXMLLoader.load(getClass().getResource("/FXML/hocvien.fxml"));
                     Stage stage = new Stage();
                     Image icon = new Image(getClass().getResourceAsStream("/Image/icon.png"));
                     stage.getIcons().add(icon);
@@ -142,16 +149,27 @@ public class DangNhapController implements Initializable {
         labelDangKi.getScene().getWindow().hide();
         Parent root = FXMLLoader.load(getClass().getResource("/FXML/register.fxml"));
         Stage stage = new Stage();
+        Image icon = new Image(getClass().getResourceAsStream("/Image/iconCode.png"));
+        stage.getIcons().add(icon);
         stage.setScene(new Scene(root));
         stage.show();
     }
 
-    public void thoat() {
-        System.exit(0);
+    public void setHidePass()
+    {
+        txtShowPass.setText(txtMatKhau.getText());
+        txtShowPass.setVisible(false);
+        txtMatKhau.setVisible(true);
+        viewPass.setVisible(true);
+        hidePass.setVisible(false);
     }
-    @FXML
-    void passwordField(KeyEvent event) {
-
-
+    public void setViewPass()
+    {
+        txtShowPass.setText(txtMatKhau.getText());
+        txtShowPass.setVisible(true);
+        txtMatKhau.setVisible(false);
+        viewPass.setVisible(false);
+        hidePass.setVisible(true);
     }
+
 }

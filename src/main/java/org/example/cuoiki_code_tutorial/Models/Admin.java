@@ -2,7 +2,7 @@ package org.example.cuoiki_code_tutorial.Models;
 
 import java.util.Date;
 
-public class QuanTriVien {
+public class Admin {
     private  String MaAD;
     private String TenAD;
     private String Email;
@@ -86,7 +86,7 @@ public class QuanTriVien {
         TrangThai = trangThai;
     }
 
-    public QuanTriVien(String tenAD, String email, String soDienThoai, String diaChi, Date ngaySinh, boolean gioiTinh, String anhDaiDien, String trangThai) {
+    public Admin(String tenAD, String email, String soDienThoai, String diaChi, Date ngaySinh, boolean gioiTinh, String anhDaiDien, String trangThai) {
         TenAD = tenAD;
         Email = email;
         SoDienThoai = soDienThoai;

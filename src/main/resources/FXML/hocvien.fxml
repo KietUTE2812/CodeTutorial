@@ -5,6 +5,7 @@
 <?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.DatePicker?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.PasswordField?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
@@ -13,7 +14,7 @@
 <?import javafx.scene.shape.Line?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane fx:id="paneUser" prefHeight="666.0" prefWidth="1074.0" stylesheets="@../CSS/adminDesign.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.cuoiki_code_tutorial.Controllers.UserController">
+<AnchorPane fx:id="paneUser" prefHeight="666.0" prefWidth="1074.0" stylesheets="@../CSS/adminDesign.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.cuoiki_code_tutorial.Controllers.DucNhan.HocVienController">
    <children>
       <BorderPane layoutX="71.0" layoutY="133.0" prefHeight="627.0" prefWidth="868.0" styleClass="semi-top-form" stylesheets="@../CSS/adminDesign.css" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <top>
@@ -34,17 +35,12 @@
          <left>
             <AnchorPane prefHeight="582.0" prefWidth="225.0" styleClass="nav-form" stylesheets="@../CSS/adminDesign.css" BorderPane.alignment="CENTER">
                <children>
-                  <ImageView fitHeight="128.0" fitWidth="150.0" layoutX="53.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true">
+                  <ImageView fitHeight="128.0" fitWidth="110.0" layoutX="53.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true">
                      <image>
-                        <Image url="@../Image/meo.jpg" />
+                        <Image url="@../Image/background.png" />
                      </image>
                   </ImageView>
-                  <Label layoutX="60.0" layoutY="142.0" prefHeight="36.0" prefWidth="107.0" text="Chào Mừng">
-                     <font>
-                        <Font name="System Bold" size="18.0" />
-                     </font>
-                  </Label>
-                  <Label fx:id="labelTen" layoutX="86.0" layoutY="178.0" text="Tên">
+                  <Label layoutX="39.0" layoutY="156.0" prefHeight="36.0" prefWidth="140.0" text="Xin Chào Bạn!!!!">
                      <font>
                         <Font name="System Bold" size="18.0" />
                      </font>
@@ -55,17 +51,16 @@
                         <Font size="18.0" />
                      </font>
                   </Button>
-                  <Button layoutX="10.0" layoutY="532.0" mnemonicParsing="false" prefHeight="33.0" prefWidth="51.0" />
-                  <Label layoutX="71.0" layoutY="535.0" text="Đăng Xuất">
-                     <font>
-                        <Font size="18.0" />
-                     </font>
-                  </Label>
                   <Button fx:id="btnAccount" layoutX="22.0" layoutY="310.0" mnemonicParsing="false" onAction="#switchForm" prefHeight="46.0" prefWidth="173.0" text="Tài Khoản">
                      <font>
                         <Font size="18.0" />
                      </font>
                   </Button>
+                  <ImageView fx:id="imageDangXuat" fitHeight="36.0" fitWidth="52.0" layoutX="14.0" layoutY="564.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../Image/iconDangXuat.jpg" />
+                     </image>
+                  </ImageView>
                </children>
             </AnchorPane>
          </left>
@@ -142,7 +137,17 @@
                            </font>
                         </Label>
                         <ComboBox fx:id="checkTrangThai" layoutX="375.0" layoutY="334.0" prefHeight="27.0" prefWidth="204.0" promptText="Chọn" styleClass="text-field" stylesheets="@../CSS/adminDesign.css" />
-                        <Button fx:id="btnCapNhat" layoutX="95.0" layoutY="313.0" mnemonicParsing="false" prefHeight="42.0" prefWidth="96.0" styleClass="btn-access" stylesheets="@../CSS/adminDesign.css" text="Cập Nhật">
+                        <Button fx:id="btnCapNhat" layoutX="161.0" layoutY="313.0" mnemonicParsing="false" prefHeight="42.0" prefWidth="96.0" styleClass="btn-access" stylesheets="@../CSS/adminDesign.css" text="Cập Nhật">
+                           <font>
+                              <Font size="15.0" />
+                           </font>
+                        </Button>
+                        <Button fx:id="btnPass" layoutX="33.0" layoutY="313.0" mnemonicParsing="false" prefHeight="42.0" prefWidth="114.0" styleClass="btn-access" stylesheets="@../CSS/adminDesign.css" text="Đổi Mật Khẩu">
+                           <font>
+                              <Font size="15.0" />
+                           </font>
+                        </Button>
+                        <Button fx:id="btnDoiTenDangNhap" layoutX="67.0" layoutY="376.0" mnemonicParsing="false" prefHeight="42.0" prefWidth="160.0" styleClass="btn-access" stylesheets="@../CSS/adminDesign.css" text="Đổi Tên Đăng Nhập">
                            <font>
                               <Font size="15.0" />
                            </font>
@@ -165,6 +170,89 @@
                               <Font name="System Bold Italic" size="36.0" />
                            </font>
                         </Label>
+                     </children>
+                  </AnchorPane>
+                  <AnchorPane fx:id="panelChangePass" layoutX="119.0" layoutY="101.0" prefHeight="418.0" prefWidth="643.0" stylesheets="@../CSS/adminDesign.css" visible="false" AnchorPane.bottomAnchor="102.19999999999993" AnchorPane.leftAnchor="119.0" AnchorPane.rightAnchor="89.79999999999995" AnchorPane.topAnchor="101.0">
+                     <styleClass>
+                        <String fx:value="shadow" />
+                        <String fx:value="white-bg" />
+                     </styleClass>
+                     <children>
+                        <Label layoutX="91.0" layoutY="154.0" text="Nhập Mật Khẩu Cũ:">
+                           <font>
+                              <Font size="15.0" />
+                           </font>
+                        </Label>
+                        <Label layoutX="88.0" layoutY="220.0" text="Nhập Mật Khẩu Mới:">
+                           <font>
+                              <Font size="15.0" />
+                           </font>
+                        </Label>
+                        <Label layoutX="267.0" layoutY="62.0" text="Đổi Mật Khẩu">
+                           <font>
+                              <Font name="System Bold" size="29.0" />
+                           </font>
+                        </Label>
+                        <Button fx:id="btnChangePass" layoutX="303.0" layoutY="283.0" mnemonicParsing="false" prefHeight="43.0" prefWidth="114.0" styleClass="btn-access" stylesheets="@../CSS/adminDesign.css" text="Đổi Mật Khẩu">
+                           <font>
+                              <Font size="14.0" />
+                           </font></Button>
+                        <PasswordField fx:id="txtOldPass" layoutX="258.0" layoutY="145.0" prefHeight="38.0" prefWidth="206.0" />
+                        <PasswordField fx:id="txtNewPass" layoutX="259.0" layoutY="213.0" prefHeight="37.0" prefWidth="206.0" />
+                        <ImageView fx:id="viewOldPass" fitHeight="24.0" fitWidth="25.0" layoutX="475.0" layoutY="156.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../Image/view.png" />
+                           </image>
+                        </ImageView>
+                        <ImageView fx:id="viewNewPass" fitHeight="24.0" fitWidth="25.0" layoutX="475.0" layoutY="219.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../Image/view.png" />
+                           </image>
+                        </ImageView>
+                        <ImageView fx:id="hideOldPass" fitHeight="24.0" fitWidth="25.0" layoutX="475.0" layoutY="156.0" pickOnBounds="true" preserveRatio="true" visible="false">
+                           <image>
+                              <Image url="@../Image/hide.png" />
+                           </image>
+                        </ImageView>
+                        <ImageView fx:id="hideNewPass" fitHeight="24.0" fitWidth="25.0" layoutX="475.0" layoutY="220.0" pickOnBounds="true" preserveRatio="true" visible="false">
+                           <image>
+                              <Image url="@../Image/hide.png" />
+                           </image>
+                        </ImageView>
+                        <TextField fx:id="txtShowPassOld" layoutX="258.0" layoutY="145.0" prefHeight="38.0" prefWidth="207.0" visible="false" />
+                        <TextField fx:id="txtShowPassNew" layoutX="258.0" layoutY="213.0" prefHeight="38.0" prefWidth="207.0" visible="false" />
+                     </children>
+                  </AnchorPane>
+                  <AnchorPane fx:id="paneChangeTenDangNhap" prefHeight="620.0" prefWidth="848.0" stylesheets="@../CSS/adminDesign.css" visible="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                     <styleClass>
+                        <String fx:value="white-bg" />
+                        <String fx:value="shadow" />
+                     </styleClass>
+                     <children>
+                        <AnchorPane layoutX="110.0" layoutY="79.0" prefHeight="386.0" prefWidth="646.0" stylesheets="@../CSS/adminDesign.css" AnchorPane.bottomAnchor="154.0" AnchorPane.leftAnchor="110.0" AnchorPane.rightAnchor="90.0" AnchorPane.topAnchor="79.0">
+                           <styleClass>
+                              <String fx:value="white-bg" />
+                              <String fx:value="shadow" />
+                           </styleClass>
+                           <children>
+                              <Label layoutX="196.0" layoutY="74.0" text="Đổi Tên Đăng Nhập">
+                                 <font>
+                                    <Font name="System Bold" size="25.0" />
+                                 </font>
+                              </Label>
+                              <Label layoutX="131.0" layoutY="160.0" text="Tên Đăng Nhập:">
+                                 <font>
+                                    <Font size="18.0" />
+                                 </font>
+                              </Label>
+                              <Button fx:id="btnThayDoiTenDangNhap" layoutX="276.0" layoutY="238.0" mnemonicParsing="false" prefHeight="43.0" prefWidth="114.0" styleClass="btn-access" stylesheets="@../CSS/adminDesign.css" text="Thay Đổi">
+                                 <font>
+                                    <Font size="14.0" />
+                                 </font>
+                              </Button>
+                              <TextField fx:id="txtOldTenDangNhap" layoutX="267.0" layoutY="152.0" prefHeight="38.0" prefWidth="219.0" />
+                           </children>
+                        </AnchorPane>
                      </children>
                   </AnchorPane>
                </children>

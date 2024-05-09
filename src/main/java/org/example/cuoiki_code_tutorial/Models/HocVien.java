@@ -95,6 +95,15 @@ public class HocVien {
         TrangThai = trangThai;
     }
 
+    public String getStringGioiTinh()
+    {
+        return this.GioiTinh?"Nam":"Nữ";
+    }
+    public String getStringTrangThai()
+    {
+        return this.TrangThai?"Hoạt Động":"Ngừng Hoạt Động";
+    }
+
     public HocVien(String tenHV, String email, String soDienThoai, String diaChi, Date ngaySinh, Boolean gioiTinh, String anhDaiDien,boolean trangThai) {
         TenHV = tenHV;
         Email = email;

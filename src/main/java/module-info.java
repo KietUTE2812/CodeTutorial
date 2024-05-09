@@ -14,5 +14,7 @@ module org.example.cuoiki_code_tutorial {
     opens org.example.cuoiki_code_tutorial.Models to javafx.base;
     exports org.example.cuoiki_code_tutorial.Utils;
     opens org.example.cuoiki_code_tutorial.Utils to javafx.fxml;
+    exports org.example.cuoiki_code_tutorial.Controllers.DucNhan;
+    opens org.example.cuoiki_code_tutorial.Controllers.DucNhan to javafx.fxml;
 
 }

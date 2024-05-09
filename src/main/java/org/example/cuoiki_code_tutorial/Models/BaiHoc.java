@@ -10,7 +10,7 @@ public class BaiHoc {
     private int thuTu;
     private String trangThai;
 
-    public BaiHoc() {
+    public BaiHoc(String id, String tenBaiHoc, String noiDung, int thoiLuong, String maChuong, int thuTu, int trangThai) {
     }
 
     public BaiHoc(String maBaiHoc, String tenBaiHoc, String noiDung, String dinhDang, int thoiLuong, String maChuong, int thuTu, String trangThai) {

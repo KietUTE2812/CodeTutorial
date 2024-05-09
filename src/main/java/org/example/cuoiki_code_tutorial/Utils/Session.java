@@ -1,6 +1,7 @@
 package org.example.cuoiki_code_tutorial.Utils;
 
 public class Session {
+    public static String path;
     private static Session instance;
     private String loggedInUsername;
 

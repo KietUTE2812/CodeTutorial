@@ -53,7 +53,12 @@ public class TaiKhoan {
         TenDangNhap = tenDangNhap;
         MatKhau = matKhau;
         VaiTro = vaiTro;
-
+    }
+    public TaiKhoan(String maTK, String tenDangNhap, String matKhau, boolean trangThai) {
+        MaTK=maTK;
+        TenDangNhap = tenDangNhap;
+        MatKhau = matKhau;
+        TrangThai=trangThai;
     }
     public TaiKhoan() {
     }
