@@ -18,7 +18,6 @@ import javafx.scene.web.WebEngine;
 import javafx.scene.web.WebView;
 import javafx.stage.Stage;
 import org.example.cuoiki_code_tutorial.DAOv2.DangKyKhoaHocDAO;
-import org.example.cuoiki_code_tutorial.DAOv2.KhoaHocDAO;
 import org.example.cuoiki_code_tutorial.DAOv2.KiemTraDauVaoDAO;
 import org.example.cuoiki_code_tutorial.Models.CauHoi;
 import org.example.cuoiki_code_tutorial.Models.KhoaHoc;

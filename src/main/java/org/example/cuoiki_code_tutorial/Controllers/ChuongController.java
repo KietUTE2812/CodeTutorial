@@ -13,12 +13,10 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.VBox;
 import javafx.fxml.FXML;
-import javafx.scene.text.TextAlignment;
 import javafx.stage.Stage;
 
 import org.example.cuoiki_code_tutorial.DAOv2.BaiHocDAO;
 import org.example.cuoiki_code_tutorial.DAOv2.ChuongDAO;
-import org.example.cuoiki_code_tutorial.DAOv2.KhoaHocDAO;
 import org.example.cuoiki_code_tutorial.DAOv2.TienDoDAO;
 import org.example.cuoiki_code_tutorial.Models.BaiHoc;
 import org.example.cuoiki_code_tutorial.Models.Chuong;

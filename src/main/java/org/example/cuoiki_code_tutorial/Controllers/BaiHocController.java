@@ -330,7 +330,7 @@ public class BaiHocController implements Initializable {
             String output_str = pythonExecutor.executeCode(testcse);
             String input_str = "Đầu vào: " + i;
             String actual_output_str = "\nĐầu ra thực tế: " + output_str;
-            String desired_output_str = "Đầu ra mong muốn: " + kiemThu.getOutput();
+            String desired_output_str = "\nĐầu ra mong muốn: " + kiemThu.getOutput();
             String descript = "";
 
             String outputWithoutSpaces = output_str.replaceAll("\\s", "");
