@@ -16,12 +16,22 @@ import java.util.List;
 public class KiemThuDAO extends SysDAO <KiemThu, String>{
     @Override
     public void insert(KiemThu entity) {
+        String sql="call InsertKiemThu(?, ?, ?, ?)";
 
+        ConnectJDBC.update(sql,
+                entity.getInput(),
+                entity.getOutput(),
+                entity.getMaKH(),
+                entity.getThuTu());
     }
 
     @Override
     public void update(KiemThu entity) {
-
+        String sql="UPDATE kiemthu SET MaKhoaHoc = ?, input =?, output = ?, trangthai = ? where ThuTu = ? and ThuTuKiemThu = ?";
+        ConnectJDBC.update(sql,
+                entity.getMaKH(),
+                entity.getInput(),
+                entity.getOutput());
     }
 
     @Override

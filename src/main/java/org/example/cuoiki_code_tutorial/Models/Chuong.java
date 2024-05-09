@@ -6,6 +6,9 @@ public class Chuong {
     private int thuTu;
     private String maKH;
 
+    public Chuong() {
+    }
+
     public Chuong(String maChuong, String tenChuong, int thuTu, String maKH) {
         this.maChuong = maChuong;
         this.tenChuong = tenChuong;

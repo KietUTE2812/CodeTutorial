@@ -137,17 +137,27 @@ public class LoginController implements Initializable {
 //                    alert.setHeaderText(null);
 //                    alert.setContentText("Bạn đang đăng nhập với tư cách là Quản trị viên!");
 //                    alert.showAndWait();
-                    btnDangNhap.getScene().getWindow().hide();
-                    Parent root = FXMLLoader.load(getClass().getResource("/FXML/admin.fxml"));
+                    String maAD = dangKyKhoaHocDAO.getMaADByUsername(username);
+                    UserSession.getInstance().setUsername(maAD);
+                    Stage stage1 = (Stage) btnDangNhap.getScene().getWindow();
+                    stage1.close();
+                    // Load file FXML cho giao diện BaiHocController
+                    FXMLLoader loader = new FXMLLoader(getClass().getResource("/FXML/trang_chu_tac_gia.fxml"));
+                    Parent root = loader.load();
+
+                    // Lấy instance của BaiHocController
+
+
+                    // Tạo Scene mới và hiển thị giao diện BaiHocController
+                    Scene scene = new Scene(root, 1000, 600);
                     Stage stage = new Stage();
-                    Image icon = new Image(getClass().getResourceAsStream("/Image/icon.png"));
-                    stage.getIcons().add(icon);
-                    stage.setScene(new Scene(root));
+                    String pathToStyle = "/CSS/styles_userhome.css";
+                    scene.getStylesheets().add(getClass().getResource(pathToStyle).toExternalForm());
+                    stage.setScene(scene);
                     stage.show();
 
 
-                    String maAD = dangKyKhoaHocDAO.getMaADByUsername(username);
-                    UserSession.getInstance().setUsername(maAD);
+
                 }
             } else {
                 Alert alert = new Alert(Alert.AlertType.ERROR);

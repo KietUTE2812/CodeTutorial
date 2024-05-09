@@ -16,57 +16,48 @@ public class BaiHocDAO extends SysDAO<BaiHoc, String> {
 
     @Override
     public void insert(BaiHoc entity) {
-        String sql = "INSERT INTO BaiHoc (MaBaiHoc, TenBaiHoc, NoiDung, DinhDang, ThoiLuong, MaChuong, ThuTu, TrangThai, GioiHanKyTu, MucDo, CodeMau, MaKhoaHoc) " +
-                "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+        String sql = "CALL InsertBaiHoc(?, ?, ?, ?, ?, ?, ?, ?);";
         ConnectJDBC.update(sql,
-                entity.getMaBaiHoc(),
                 entity.getTenBaiHoc(),
                 entity.getNoiDung(),
-                entity.getDinhDang(),
                 entity.getThoiLuong(),
-                entity.getMaChuong(),
-                entity.getThuTu(),
-                entity.getTrangThai(),
+                entity.getMaChuong(),//MaChuong
                 entity.getGioiHanKyTu(),
                 entity.getMucDo(),
                 entity.getCodeMau(),
-                entity.getMaKhoaHoc());
+                entity.getMaKhoaHoc());//MaKH
     }
 
     @Override
     public void update(BaiHoc entity) {
-        String sql = "UPDATE BaiHoc SET TenBaiHoc=?, NoiDung=?, DinhDang=?, ThoiLuong=?, MaChuong=?, ThuTu=?, TrangThai=?, GioiHanKyTu=?, MucDo=?, CodeMau=?, MaKhoaHoc=? WHERE MaBaiHoc=?";
+        String sql="UPDATE BaiHoc SET TenBH = ?, NoiDung = ?, ThoiLuong=?,  ThuTu= ?, TrangThai = ? WHERE MaBH =? and MaChuong = ? and MaKhoaHoc = ?";
         ConnectJDBC.update(sql,
                 entity.getTenBaiHoc(),
                 entity.getNoiDung(),
-                entity.getDinhDang(),
                 entity.getThoiLuong(),
-                entity.getMaChuong(),
                 entity.getThuTu(),
                 entity.getTrangThai(),
-                entity.getGioiHanKyTu(),
-                entity.getMucDo(),
-                entity.getCodeMau(),
-                entity.getMaKhoaHoc(),
-                entity.getMaBaiHoc());
+                entity.getMaBaiHoc(),
+                entity.getMaChuong(),
+                entity.getMaKhoaHoc());
     }
 
     @Override
     public void delete(String id) {
-        String sql = "DELETE FROM BaiHoc WHERE MaBH=?";
+        String sql="UPDATE BaiHoc set TrangThai = 0 WHERE MaBH=?";
         ConnectJDBC.update(sql, id);
     }
 
     @Override
     public BaiHoc selectById(String id) {
-        String sql = "SELECT * FROM BaiHoc WHERE MaBH=?";
+        String sql="SELECT * FROM BaiHoc WHERE MaBH=?";
         List<BaiHoc> list = selectBySql(sql, id);
-        return list.isEmpty() ? null : list.get(0);
+        return list.size() > 0 ? list.get(0) : null;
     }
 
     @Override
     public List<BaiHoc> selectAll() {
-        String sql = "SELECT * FROM BaiHoc";
+        String sql="SELECT * FROM BaiHoc where TrangThai=1 Order by ThuTu";
         return selectBySql(sql);
     }
 

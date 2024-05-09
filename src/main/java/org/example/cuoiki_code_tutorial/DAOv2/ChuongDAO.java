@@ -12,27 +12,38 @@ import java.util.List;
 public class ChuongDAO extends SysDAO<Chuong, String>{
     @Override
     public void insert(Chuong entity) {
-
+        String sql="Call ThemChuongMoi(?, ?)";
+        ConnectJDBC.update(sql,
+                entity.getTenChuong(),
+                entity.getMaKH());
     }
 
     @Override
     public void update(Chuong entity) {
-
+        String sql="UPDATE Chuong SET TenChuong = ?, ThuTu = ?, MaKH = ?WHERE MaChuong=?";
+        ConnectJDBC.update(sql,
+                entity.getTenChuong(),
+                entity.getThuTu(),
+                entity.getMaKH());
     }
 
     @Override
     public void delete(String id) {
-
+        String sql="Delete from chuong where MaChuong=?";
+        ConnectJDBC.update(sql, id);
     }
 
     @Override
     public Chuong selectById(String id) {
-        return null;
+        String sql="SELECT * FROM Chuong WHERE MaChuong=?";
+        List<Chuong> list = selectBySql(sql, id);
+        return list.size() > 0 ? list.get(0) : null;
     }
 
     @Override
     public List<Chuong> selectAll() {
-        return null;
+        String sql="SELECT * FROM Chuong Order by thuTu";
+        return selectBySql(sql);
     }
 
     @Override
