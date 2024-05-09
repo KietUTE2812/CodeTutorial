@@ -131,12 +131,12 @@ public class KiemTraDauVao implements Initializable {
         answerRadio1.setToggleGroup(answerGroup);
         questionPane.getChildren().add(answerRadio1);
 
-        RadioButton answerRadio2 = new RadioButton(question.getCauTraLoi1());
+        RadioButton answerRadio2 = new RadioButton(question.getCauTraLoi2());
         answerRadio2.setUserData(2);
         answerRadio2.setToggleGroup(answerGroup);
         questionPane.getChildren().add(answerRadio2);
 
-        RadioButton answerRadio3 = new RadioButton(question.getCauTraLoi1());
+        RadioButton answerRadio3 = new RadioButton(question.getCauTraLoi3());
         answerRadio3.setUserData(3);
         answerRadio3.setToggleGroup(answerGroup);
         questionPane.getChildren().add(answerRadio3);

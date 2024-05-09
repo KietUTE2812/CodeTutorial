@@ -6,6 +6,7 @@ import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -15,6 +16,7 @@ import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
@@ -50,7 +52,7 @@ public class AdminController implements Initializable {
     private ImageView  imageHocVien;
 
     @FXML
-    private Label labelTen;
+    private Label labelTen, lblBackHome;
 
     @FXML
     private TableView<HocVien> tableHocVien;
@@ -123,6 +125,34 @@ public class AdminController implements Initializable {
         setCellValueFactory();
         loadTaiKhoanAll();
         setCellValueFactoryTaiKhoan();
+
+
+        lblBackHome.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent mouseEvent) {
+                Stage stage1 = (Stage) lblBackHome.getScene().getWindow();
+                stage1.close();
+                // Load file FXML cho giao diện BaiHocController
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("/FXML/trang_chu_tac_gia.fxml"));
+                Parent root = null;
+                try {
+                    root = loader.load();
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                }
+
+                // Lấy instance của BaiHocController
+
+
+                // Tạo Scene mới và hiển thị giao diện BaiHocController
+                Scene scene = new Scene(root, 1000, 600);
+                Stage stage = new Stage();
+                String pathToStyle = "/CSS/styles_userhome.css";
+                scene.getStylesheets().add(getClass().getResource(pathToStyle).toExternalForm());
+                stage.setScene(scene);
+                stage.show();
+            }
+        });
 
         tableHocVien.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<HocVien>() {
             @Override

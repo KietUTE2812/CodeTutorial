@@ -14,6 +14,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
@@ -37,23 +38,48 @@ public class TrangChuTacGiaController implements Initializable {
     private Button btnThemKH;
     @FXML
     private VBox vBox; // Đổi từ HBox thành VBox
+    @FXML
+    private HBox hboxAdmin;
+    @FXML
+    private Label lblName;
     QuanLyKhoaHocDAO dao = new QuanLyKhoaHocDAO();
 
     private void loadKhoaHoc() {
+        lblName.setText(UserSession.getInstance().getUsername());
+        hboxAdmin.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent mouseEvent) {
+                Stage stage = (Stage) ((Node) mouseEvent.getSource()).getScene().getWindow();
 
+                try {
+                    // Tạo loader cho file fxml của trang chỉnh sửa
+                    FXMLLoader loader = new FXMLLoader(getClass().getResource("/FXML/admin.fxml"));
+                    Parent root = loader.load();
+
+                    // Truyền thông tin của khóa học cần chỉnh sửa cho controller
+
+                    // Tạo scene mới và thiết lập cho stage
+                    Scene scene = new Scene(root);
+                    stage.setScene(scene);
+                    stage.show();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
         List<KhoaHoc> khs = dao.selectAll();
         List<KhoaHoc> khoaHocReal = new ArrayList<>();
         for (KhoaHoc kh : khs) {
-            if(kh.getMaAD() != null && kh.getMaAD().equals(UserSession.getInstance().getUsername())) {
+
                 khoaHocReal.add(kh);
-            }
+
         }
         vBox.getChildren().clear();
         HBox rowBox = new HBox(); // Tạo một VBox mới cho mỗi hàng khóa học
         rowBox.setAlignment(Pos.CENTER);
         rowBox.setSpacing(10);
         int count = 0;
-        for(KhoaHoc khoaHoc : khoaHocReal) {
+        for (KhoaHoc khoaHoc : khoaHocReal) {
             if (count == 3) { // Nếu đã thêm 3 khóa học vào hàng, thêm hàng vào scrollPane và tạo một hàng mới
                 vBox.getChildren().add(rowBox);
                 rowBox = new HBox();
@@ -96,6 +122,7 @@ public class TrangChuTacGiaController implements Initializable {
             }
         });
     }
+
     private VBox createKhoaHocBox(KhoaHoc khoaHoc) {
         VBox vBoxKhoaHoc = new VBox();
         vBoxKhoaHoc.setId("vBoxKhoaHoc");
@@ -164,6 +191,7 @@ public class TrangChuTacGiaController implements Initializable {
         vBoxKhoaHoc.getChildren().addAll(imageView, tenKH, tacGia, ngayTao, editButton, deleteButton);
         return vBoxKhoaHoc;
     }
+
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         loadKhoaHoc();
