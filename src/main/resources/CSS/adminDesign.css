@@ -1,58 +1,50 @@
-.top-form{
-    -fx-background-color: #fff;
-    -fx-border-width: .4px .4px .2px .4px;
-    -fx-border-color: #000;
+.closer{
+    -fx-background-color: transparent;
+    -fx-cursor: hand;
 }
-.semi-top-form{
-    -fx-background-color: #efefef;
+.closer:hover{
+    -fx-background-color: #ff3547;
+}
+
+.left-form{
+    -fx-background-color: linear-gradient(to bottom right,#ffff,#256b51);
     -fx-border-color: #000;
-    -fx-border-width: .2px .4px .8px .4px;
+    -fx-border-width: .4px 0px .4px .4px ;
+}
+
+.right-form{
+    -fx-background-color: #fff;
+    -fx-border-color: #000;
+    -fx-border-width: .4px 0px .4px .4px ;
+}
+
+.text-field{
+    -fx-background-color: linear-gradient(to bottom right,#efefe,#eee);
+    -fx-background-radius: 7px;
+    -fx-border-color: #000;
+    -fx-border-width: .4px;
+    -fx-border-radius: 4px;
+    -fx-font-size: 18px;
+    -fx-font-family: Arial;
 
 }
-.nav-form{
-    -fx-background-color: linear-gradient(to bottom right,#ffff,#256b51);
-}
-.white-bg{
+.text-field:focused{
     -fx-background-color: #fff;
-    -fx-background-radius:10px;
+    -fx-border-width: 2px;
+}
+
+.login-btn{
+    -fx-background-color: linear-gradient(to bottom right,#69bfbf,#256b51);
+    -fx-background-radius: 7px;
+    -fx-font-family: Arial;
+    -fx-font-size: 18px;
+    -fx-cursor: hand;
+    -fx-text-fill: #fff;
+
+}
+.login-btn:hover{
+    -fx-background-color: linear-gradient(to bottom right,#ffff,#69bfbf);
 }
 .shadow{
     -fx-effect: dropshadow(three-pass-box,rgba(0,0,0,0.5),6,0,0,0);
-}
-.card{
-    -fx-background-color: linear-gradient(to right, #6b7b91, #577e5a);
-    -fx-background-radius: 6px;
-}
-
-.table-view{
-    -fx-background-color: transparent;
-    -fx-border-radius: 8px;
-    -fx-border-color: #000;
-}
-.table-vew .table-column{
-    -fx-alignment: CENTER;
-}
-.table-vew .column-header-background{
-    -fx-background-color: linear-gradient(to bottom right, #6b7b91, #577e5a);
-    -fx-background-insets: 0 0 0 0;
-    -f-background-radius: 8px 8px 0px 0px;
-}
-.table-vew .column-header, .filter{
-    -fx-background-color: transparent;
-    -fx-size:40px;
-}
-.table-vew .column-header .filter{
-    -fx-text-fill: #fff;
-    -fx-font-size: "Arial";
-}
-.text-field{
-    -fx-background-color: linear-gradient(to bottom, #efefef,#eee);
-    -fx-border-color: linear-gradient(to bottom right, #272b3f,#256b51);
-    -fx-border-width: 1px;
-    -fx-font-size: "Tahoma";
-    -fx-border-radius: 7px;
-}
-.btn-access{
-    -fx-background-color: linear-gradient(to bottom right, #6b7b91, #577e5a);
-    -fx-text-fill: #fff;
 }

@@ -14,7 +14,7 @@
                <children>
                   <AnchorPane layoutY="31.2" prefHeight="35.0" prefWidth="1106.0" styleClass="semi-top-form" stylesheets="@../CSS/adminDesign.css" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                      <children>
-                        <Label layoutX="14.0" layoutY="9.0" text="Thông tin tài khoản">
+                        <Label fx:id="lblAccount" layoutX="14.0" layoutY="9.0" text="Thông tin tài khoản">
                            <font>
                               <Font name="System Bold" size="18.0" />
                            </font>

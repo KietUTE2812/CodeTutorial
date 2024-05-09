@@ -3,13 +3,16 @@ package org.example.cuoiki_code_tutorial.Controllers.DucNhan;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.control.*;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.FileChooser;
+import org.example.cuoiki_code_tutorial.Controllers.UserHomeController;
 import org.example.cuoiki_code_tutorial.Dao.DucNhan.HocVienDAO;
 import org.example.cuoiki_code_tutorial.Models.HocVien;
 import org.example.cuoiki_code_tutorial.Utils.Session;
@@ -43,7 +46,7 @@ public class HocVienController implements Initializable {
     @FXML
     private AnchorPane panelChangePass;
     @FXML
-    private Label labelTen;
+    private Label labelTen, lblAccount;
     @FXML
     private Button btnCapNhat;
     @FXML
@@ -136,6 +139,17 @@ public class HocVienController implements Initializable {
         hideOldPass.setOnMouseClicked(ActionEvent->HideOldPass());
         btnDoiTenDangNhap.setOnAction(ActionEvent->ChuyenTrangDoiTenDangNhap());
         btnThayDoiTenDangNhap.setOnAction(ActionEvent->DoiTenDangNhap());
+
+        lblAccount.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent mouseEvent) {
+                try {
+                    loadUserHome();
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                }
+            }
+        });
     }
 
     public void ThongTinHocVien() {
@@ -188,6 +202,8 @@ public class HocVienController implements Initializable {
             alert.showAndWait();
         }
     }
+
+
 
     public void CapNhatThongTin() {
         String loggedInUsername = Session.getInstance().getLoggedInUsername();
@@ -409,6 +425,25 @@ public class HocVienController implements Initializable {
         viewNewPass.setVisible(false);
         hideNewPass.setVisible(true);
         txtShowPassNew.setVisible(true);
+    }
+
+    public void loadUserHome() throws IOException {
+        Stage stage1 = (Stage) lblAccount.getScene().getWindow();
+        stage1.close();
+        // Load file FXML cho giao diện BaiHocController
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/FXML/user_home.fxml"));
+        Parent root = loader.load();
+
+        // Lấy instance của BaiHocController
+        UserHomeController userHomeController = loader.getController();
+
+        // Tạo Scene mới và hiển thị giao diện BaiHocController
+        Scene scene = new Scene(root, 1000, 600);
+        Stage stage = new Stage();
+        String pathToStyle = "/CSS/styles_userhome.css";
+        scene.getStylesheets().add(getClass().getResource(pathToStyle).toExternalForm());
+        stage.setScene(scene);
+        stage.show();
     }
 
 }
