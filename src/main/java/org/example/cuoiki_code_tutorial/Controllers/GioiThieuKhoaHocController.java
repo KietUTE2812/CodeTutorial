@@ -22,6 +22,7 @@ import org.example.cuoiki_code_tutorial.DAOv2.KiemTraDauVaoDAO;
 import org.example.cuoiki_code_tutorial.Models.CauHoi;
 import org.example.cuoiki_code_tutorial.Models.KhoaHoc;
 import org.example.cuoiki_code_tutorial.Utils.Session;
+import org.example.cuoiki_code_tutorial.Utils.UserSession;
 
 import java.io.IOException;
 import java.net.URL;
@@ -54,7 +55,7 @@ public class GioiThieuKhoaHocController implements Initializable {
     void loadKhoaHoc(KhoaHoc khoaHoc) throws SQLException {
         khoaHocf = khoaHoc;
         maKhoaHoc = khoaHoc.getMaKH();
-        userName = Session.getInstance().getLoggedInUsername();
+        userName = UserSession.getInstance().getUsername();
         //Button hocNgay = new Button("Vào học ngay");
         lbl_CourseName.setText(khoaHoc.getTenKH());
         lbl_IDad.setText(khoaHoc.getMaAD());

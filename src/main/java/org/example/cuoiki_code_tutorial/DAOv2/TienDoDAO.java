@@ -87,7 +87,7 @@ public class TienDoDAO extends SysDAO<TienDo, String>{
             rs = ConnectJDBC.query(query, maTk, maKH, thuTu);
             if(rs.next())
             {
-                tienDo.setMaTK(rs.getString("MaTK"));
+                tienDo.setMaTK(rs.getString("MaHV"));
                 tienDo.setMaKhoaHoc(rs.getString("MaKhoaHoc"));
                 tienDo.setThuTu(rs.getInt("ThuTu"));
                 tienDo.setTrangThai(rs.getInt("TrangThai"));

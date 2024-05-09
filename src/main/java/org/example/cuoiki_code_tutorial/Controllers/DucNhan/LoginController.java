@@ -14,12 +14,15 @@ import org.example.cuoiki_code_tutorial.Controllers.BaiHocController;
 import org.example.cuoiki_code_tutorial.Controllers.GioiThieuKhoaHocController;
 import org.example.cuoiki_code_tutorial.Controllers.SceneLoader;
 import org.example.cuoiki_code_tutorial.Controllers.UserHomeController;
+import org.example.cuoiki_code_tutorial.DAOv2.DangKyKhoaHocDAO;
 import org.example.cuoiki_code_tutorial.Dao.DucNhan.LoginDAO;
 import org.example.cuoiki_code_tutorial.Models.TaiKhoan;
 import org.example.cuoiki_code_tutorial.Utils.Session;
+import org.example.cuoiki_code_tutorial.Utils.UserSession;
 
 import java.io.IOException;
 import java.net.URL;
+import java.sql.SQLException;
 import java.util.ResourceBundle;
 
 public class LoginController implements Initializable {
@@ -58,7 +61,7 @@ public class LoginController implements Initializable {
 
     //gọi DAO
     private LoginDAO dangNhapDao;
-
+    private DangKyKhoaHocDAO dangKyKhoaHocDAO = new DangKyKhoaHocDAO();
 
     // biến check vai trò
     private boolean ischeck;
@@ -104,8 +107,11 @@ public class LoginController implements Initializable {
         TaiKhoan taiKhoan = new TaiKhoan(tenDangnhap, matkhau, ischeck);
         try{
             TaiKhoan checktaikhoan = dangNhapDao.onLogin(taiKhoan);
+            String username = txtTenDangNhap.getText();
             if(checktaikhoan != null) {
                 if (checktaikhoan.isVaiTro()) {
+                    String maHV = dangKyKhoaHocDAO.getMaHVByUsername(username);
+                    UserSession.getInstance().setUsername(maHV);
                     Stage stage1 = (Stage) btnDangNhap.getScene().getWindow();
                     stage1.close();
                     // Load file FXML cho giao diện BaiHocController
@@ -122,6 +128,8 @@ public class LoginController implements Initializable {
                     scene.getStylesheets().add(getClass().getResource(pathToStyle).toExternalForm());
                     stage.setScene(scene);
                     stage.show();
+
+
                 } else {
                     // Nếu là quản trị viên
 //                    Alert alert = new Alert(Alert.AlertType.ERROR);
@@ -136,6 +144,10 @@ public class LoginController implements Initializable {
                     stage.getIcons().add(icon);
                     stage.setScene(new Scene(root));
                     stage.show();
+
+
+                    String maAD = dangKyKhoaHocDAO.getMaADByUsername(username);
+                    UserSession.getInstance().setUsername(maAD);
                 }
             } else {
                 Alert alert = new Alert(Alert.AlertType.ERROR);
@@ -145,6 +157,8 @@ public class LoginController implements Initializable {
                 alert.showAndWait();
             }
         } catch (ClassNotFoundException |IOException e) {
+            throw new RuntimeException(e);
+        } catch (SQLException e) {
             throw new RuntimeException(e);
         }
         String tendangnhap = txtTenDangNhap.getText();

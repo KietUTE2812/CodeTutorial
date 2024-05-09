@@ -23,6 +23,7 @@ import org.example.cuoiki_code_tutorial.Models.Chuong;
 import org.example.cuoiki_code_tutorial.Models.KhoaHoc;
 import org.example.cuoiki_code_tutorial.Models.TienDo;
 import org.example.cuoiki_code_tutorial.Utils.Session;
+import org.example.cuoiki_code_tutorial.Utils.UserSession;
 
 import java.io.IOException;
 import java.net.URL;
@@ -64,7 +65,7 @@ public class ChuongController implements Initializable {
 
         TienDoDAO tienDoDAO = new TienDoDAO();
         List<Integer> lstSTT = new ArrayList<>();
-        List<TienDo> tienDos = tienDoDAO.getTienDoByMaTKMaKhoaHoc(Session.getInstance().getLoggedInUsername(), khoaHoc.getMaKH());
+        List<TienDo> tienDos = tienDoDAO.getTienDoByMaTKMaKhoaHoc(UserSession.getInstance().getUsername(), khoaHoc.getMaKH());
         for(TienDo tienDo : tienDos)
         {
             lstSTT.add(tienDo.getTrangThai());

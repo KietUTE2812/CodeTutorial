@@ -82,8 +82,7 @@ public class HocVienController implements Initializable {
     @FXML
     private Button btnChangePass;
 
-    @FXML
-    private ImageView imageDangXuat;
+
     private HocVienDAO hocVienDao;
 
     @FXML
@@ -127,7 +126,7 @@ public class HocVienController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         btnCapNhat.setOnAction(ActionEvent->CapNhatThongTin());
-        imageDangXuat.setOnMouseClicked(ActionEvent->DangXuat());
+
         btnThemAnh.setOnAction(ActionEvent->addImageHocVien());
         btnPass.setOnAction(ActionEvent->ChuyenTrangDoiMatKhau());
         btnChangePass.setOnAction(ActionEvent->DoiMatKhau());
@@ -249,7 +248,7 @@ public class HocVienController implements Initializable {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        Stage stage = (Stage) imageDangXuat.getScene().getWindow();
+        Stage stage = (Stage) txtDiaChi.getScene().getWindow();
         Scene scene = new Scene(root);
         stage.setScene(scene);
         stage.show();

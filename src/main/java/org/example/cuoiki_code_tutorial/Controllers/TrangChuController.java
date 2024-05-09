@@ -12,14 +12,11 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
-import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
-import javafx.scene.web.WebEngine;
-import javafx.scene.web.WebView;
 import javafx.stage.Stage;
-import org.example.cuoiki_code_tutorial.Dao.KhoaHocDAO;
+import org.example.cuoiki_code_tutorial.DAOv2.KhoaHocDAO;
 import org.example.cuoiki_code_tutorial.Models.KhoaHoc;
 
 import java.net.URL;
@@ -34,7 +31,7 @@ public class TrangChuController implements Initializable {
 
         KhoaHocDAO khoaHocDAO = new KhoaHocDAO();
         HBox hBox = new HBox();
-        List<KhoaHoc> khs = khoaHocDAO.getAllKhoaHoc();
+        List<KhoaHoc> khs = khoaHocDAO.selectAll();
 
         for(KhoaHoc khoaHoc : khs) {
             VBox vBox = new VBox();

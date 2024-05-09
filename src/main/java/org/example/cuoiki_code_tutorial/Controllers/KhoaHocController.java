@@ -9,20 +9,16 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ScrollPane;
-import javafx.scene.control.TitledPane;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.web.WebEngine;
 import javafx.scene.web.WebView;
 import javafx.stage.Stage;
-import org.example.cuoiki_code_tutorial.Dao.KhoaHocDAO;
-import org.example.cuoiki_code_tutorial.Models.BaiHoc;
-import org.example.cuoiki_code_tutorial.Models.Chuong;
+import org.example.cuoiki_code_tutorial.DAOv2.KhoaHocDAO;
 import org.example.cuoiki_code_tutorial.Models.KhoaHoc;
 
 import java.net.URL;
-import java.util.List;
 import java.util.ResourceBundle;
 
 public class KhoaHocController implements Initializable {
@@ -43,9 +39,9 @@ public class KhoaHocController implements Initializable {
 
     private KhoaHocDAO khoaHocDAO = new KhoaHocDAO();
 
-    private void loadKhoaHoc() {
+    private void loadKhoaHoc(KhoaHoc kh) {
 
-        KhoaHoc kh = khoaHocDAO.getKhoaHoc(MaKH);
+
         Button hocNgay = new Button("Vào học ngay");
         hocNgay.setOnAction(new EventHandler<ActionEvent>() {
             @Override
@@ -108,6 +104,6 @@ public class KhoaHocController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        loadKhoaHoc();
+        //loadKhoaHoc();
     }
 }

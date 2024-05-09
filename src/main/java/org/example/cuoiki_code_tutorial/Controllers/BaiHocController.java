@@ -23,6 +23,7 @@ import org.example.cuoiki_code_tutorial.Models.KhoaHoc;
 import org.example.cuoiki_code_tutorial.Models.KiemThu;
 import org.example.cuoiki_code_tutorial.Models.TienDo;
 import org.example.cuoiki_code_tutorial.Utils.Session;
+import org.example.cuoiki_code_tutorial.Utils.UserSession;
 import org.fxmisc.richtext.CodeArea;
 import org.fxmisc.richtext.LineNumberFactory;
 
@@ -163,7 +164,7 @@ public class BaiHocController implements Initializable {
         getSoLuongBaiHoc(maChuong, maKhoaHoc);
         baiHoc = baiHocDAO.getBaiHocByThuTu(thuTu, maKhoaHoc);
 
-        List<TienDo> tienDos = tienDoDAO.getTienDoByMaTKMaKhoaHoc(Session.getInstance().getLoggedInUsername(), baiHoc.getMaKhoaHoc());
+        List<TienDo> tienDos = tienDoDAO.getTienDoByMaTKMaKhoaHoc(UserSession.getInstance().getUsername(), baiHoc.getMaKhoaHoc());
         danhSachTrangThai.clear();
         for (TienDo tienDo : tienDos) {
             Map<String, Integer> capThuTuTrangThai = new HashMap<>();
@@ -381,7 +382,7 @@ public class BaiHocController implements Initializable {
 
     public void onclickNopBai(ActionEvent actionEvent) {
         TienDoDAO tienDoDAO = new TienDoDAO();
-        TienDo tienDo = tienDoDAO.getTienDoByThuTu(Session.getInstance().getLoggedInUsername(), baiHoc.getMaKhoaHoc(), baiHoc.getThuTu());
+        TienDo tienDo = tienDoDAO.getTienDoByThuTu(UserSession.getInstance().getUsername(), baiHoc.getMaKhoaHoc(), baiHoc.getThuTu());
 
         tienDo.setTrangThai(1);
 

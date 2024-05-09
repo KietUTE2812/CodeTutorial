@@ -63,4 +63,25 @@ public class DangKyKhoaHocDAO {
 
     }
 
+    public String getMaHVByUsername(String username) throws SQLException {
+        String maHV = "";
+        String query = "SELECT hv.MaHV FROM hocvien hv INNER JOIN taikhoan tk ON hv.MaTK = tk.MaTK WHERE tk.TenDangNhap = ?;";
+        ResultSet rs = ConnectJDBC.query(query, username);
+        if(rs.next())
+        {
+            maHV = rs.getString("MaHV");
+        }
+        return maHV;
+    }
+    public String getMaADByUsername(String username) throws SQLException {
+        String maHV = "";
+        String query = "SELECT qtv.MaAD FROM quantrivien qtv INNER JOIN taikhoan tk ON qtv.MaTK = tk.MaTK WHERE tk.TenDangNhap = ?;";
+        ResultSet rs = ConnectJDBC.query(query, username);
+        if(rs.next())
+        {
+            maHV = rs.getString(1);
+        }
+        return maHV;
+    }
+
 }

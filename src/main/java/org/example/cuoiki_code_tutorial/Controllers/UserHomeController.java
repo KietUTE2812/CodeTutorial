@@ -9,22 +9,22 @@ import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
+import javafx.scene.control.*;
 
 
-import javafx.scene.control.ProgressBar;
-import javafx.scene.control.ScrollPane;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.shape.Line;
 import javafx.stage.Stage;
+import org.example.cuoiki_code_tutorial.Controllers.DucNhan.HocVienController;
 import org.example.cuoiki_code_tutorial.DAOv2.KhoaHocDAO;
 import org.example.cuoiki_code_tutorial.Models.KhoaHoc;
 import org.example.cuoiki_code_tutorial.Utils.Session;
+import org.example.cuoiki_code_tutorial.Utils.UserSession;
 
 import java.io.IOException;
 import java.net.URL;
@@ -36,7 +36,7 @@ public class UserHomeController implements Initializable {
     @FXML
     private ImageView imglogoCodeLearn, imglogout;
     @FXML
-    private AnchorPane StudyingCourses, CompleteCourses, SuggestedCourses;
+    private AnchorPane StudyingCourses, CompleteCourses, SuggestedCourses, paneAccount;
     @FXML
     private Line line_StudyingCourse, line_CompleteCourse, line_SuggestedCourse;
     @FXML
@@ -58,8 +58,8 @@ public class UserHomeController implements Initializable {
         imglogout.setImage(imgLogout);
         loadKhoaHocGoiY();
         loadKhoaHoc();
-        Session.getInstance().setLoggedInUsername("thanhbinhdang");
-        userName = Session.getInstance().getLoggedInUsername();
+        //Session.getInstance().setLoggedInUsername("thanhbinhdang");
+        userName = UserSession.getInstance().getUsername();
         lbl_username.setText(userName);
 
         btnShowAllCourse.setOnAction(e -> {
@@ -69,6 +69,27 @@ public class UserHomeController implements Initializable {
                 throw new RuntimeException(ex);
             }
         });
+
+        imglogout.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent mouseEvent) {
+                showAlert("Đăng xuất");
+            }
+        });
+
+        paneAccount.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent mouseEvent) {
+                try {
+                    loadAccount();
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                } catch (SQLException e) {
+                    throw new RuntimeException(e);
+                }
+            }
+        });
+
 
         progressBar_expAcc.setProgress(0.5); // Đặt tiến trình ban đầu là 50%
         progressBar_expAcc.idProperty().bind(
@@ -284,6 +305,30 @@ public class UserHomeController implements Initializable {
         stage.show();
     }
 
+    public void loadAccount( ) throws IOException, SQLException {
+        // Tải layout mới
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/FXML/hocvien.fxml"));
+        Parent root = loader.load();
+
+        // Khởi tạo controller
+        HocVienController hocVienController  = loader.getController();
+        hocVienController.ThongTinHocVien();
+
+        // Lấy Scene hiện tại từ Stage của button
+        Stage stage = (Stage) SuggestedCourses.getScene().getWindow();
+
+        // Tạo Scene mới từ Parent (layout) đã tải
+        Scene scene = new Scene(root);
+
+        // Áp dụng CSS (nếu có)
+//        String pathToStyle = "/CSS/styles_GTKhoaHoc.css";
+//        scene.getStylesheets().add(getClass().getResource(pathToStyle).toExternalForm());
+
+        // Hiển thị Scene mới trên Stage
+        stage.setScene(scene);
+        stage.show();
+    }
+
     public void loadAllKhoaHoc(Button btn) throws IOException {
         String resPath = "/FXML/all_khoa_hoc.fxml";
         String cssPath = "/CSS/styles_all_khoahoc.css";
@@ -308,4 +353,35 @@ public class UserHomeController implements Initializable {
         stage.setScene(scene);
         stage.show();
     }
+    public void DangXuat()
+    {
+        Session.getInstance().setLoggedInUsername(null);
+        UserSession.getInstance().setUsername(null);
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/FXML/login.fxml"));
+        Parent root = null;
+        try {
+            root = loader.load();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        Stage stage = (Stage) imglogoCodeLearn.getScene().getWindow();
+        Scene scene = new Scene(root);
+        stage.setScene(scene);
+        stage.show();
+    }
+
+    private void showAlert(String message) {
+        Alert alert = new Alert(Alert.AlertType.INFORMATION); // Use INFORMATION, WARNING, ERROR as needed
+        alert.setTitle("Thông báo");
+        alert.setHeaderText(null); // Optional header text
+        alert.setContentText(message);
+
+        alert.showAndWait().ifPresent(response -> {
+            if (response == ButtonType.OK) {
+                DangXuat();
+
+            }
+        }); // Display the alert and wait for user interaction
+    }
+
 }

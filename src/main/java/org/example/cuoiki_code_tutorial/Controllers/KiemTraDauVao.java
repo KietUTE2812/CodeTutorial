@@ -15,6 +15,7 @@ import javafx.util.Duration;
 import org.example.cuoiki_code_tutorial.DAOv2.KiemTraDauVaoDAO;
 import org.example.cuoiki_code_tutorial.Models.CauHoi;
 import org.example.cuoiki_code_tutorial.Utils.Session;
+import org.example.cuoiki_code_tutorial.Utils.UserSession;
 
 import java.net.URL;
 import java.util.ArrayList;
@@ -214,7 +215,7 @@ public class KiemTraDauVao implements Initializable {
         int b = currentQuestionIndex + 1;
         float sc = (float) a / b ;
 
-        kiemTraDauVaoDAO.insertDiemDauVao(sc, Session.getInstance().getLoggedInUsername(), maKh);
+        kiemTraDauVaoDAO.insertDiemDauVao(sc, UserSession.getInstance().getUsername(), maKh);
     }
 }
 
