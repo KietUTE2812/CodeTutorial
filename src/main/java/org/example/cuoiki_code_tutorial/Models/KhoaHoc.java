@@ -6,10 +6,25 @@ public class KhoaHoc {
     private String maKH;
     private String tenKH;
     private String moTa;
+    private int soLuongbaiHoc;
     private String hinhAnh;
     private LocalDate ngayTao;
     private int TrangThai;
     private String maAD;
+
+    public KhoaHoc() {
+    }
+
+    public KhoaHoc(String maKH, String tenKH, String moTa, int soLuongbaiHoc, String hinhAnh, LocalDate ngayTao, int trangThai, String maAD) {
+        this.maKH = maKH;
+        this.tenKH = tenKH;
+        this.moTa = moTa;
+        this.soLuongbaiHoc = soLuongbaiHoc;
+        this.hinhAnh = hinhAnh;
+        this.ngayTao = ngayTao;
+        TrangThai = trangThai;
+        this.maAD = maAD;
+    }
 
     public KhoaHoc(String maKH, String tenKH, String moTa, String hinhAnh, LocalDate ngayTao, int trangThai, String maAD) {
         this.maKH = maKH;
@@ -19,6 +34,14 @@ public class KhoaHoc {
         this.ngayTao = ngayTao;
         TrangThai = trangThai;
         this.maAD = maAD;
+    }
+
+    public int getSoLuongbaiHoc() {
+        return soLuongbaiHoc;
+    }
+
+    public void setSoLuongbaiHoc(int soLuongbaiHoc) {
+        this.soLuongbaiHoc = soLuongbaiHoc;
     }
 
     public String getMaKH() {

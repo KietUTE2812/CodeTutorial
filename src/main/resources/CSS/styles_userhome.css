@@ -1,13 +1,14 @@
 #header {
     -fx-background-color: #ffffff;
 }
-#account
-{
-    -fx-background-color: #1e2a55;
+
+#account {
+    -fx-background-color: linear-gradient(to bottom right, #aab7ee, #2D53E8FF);
 }
-#paneAccount
-{
-    -fx-background-color: #35416e;
+
+#paneAccount {
+    -fx-background-color: #444d70;
+    -fx-border-radius: 50px;
 }
 
 .vbox-background {

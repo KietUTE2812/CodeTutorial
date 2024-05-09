@@ -18,29 +18,32 @@
             <AnchorPane fx:id="paneAccount" layoutX="63.0" layoutY="23.0" prefHeight="113.0" prefWidth="274.0">
                 <children>
                     <ProgressBar fx:id="progressBar_expAcc" layoutX="37.0" layoutY="79.0" prefWidth="200.0" progress="0.0" />
-                    <Label fx:id="lbl_username" layoutX="62.0" layoutY="26.0" prefHeight="18.0" prefWidth="144.0" text="Username" textFill="WHITE" />
+                    <Label fx:id="lbl_username" layoutX="37.0" layoutY="26.0" prefHeight="18.0" prefWidth="144.0" text="Username" textFill="WHITE">
+                  <font>
+                     <Font size="18.0" />
+                  </font></Label>
                 </children>
             </AnchorPane>
             <Label layoutX="412.0" layoutY="48.0" text="Khóa học" textFill="WHITE" />
-            <Label layoutX="410.0" layoutY="66.0" text="2/10" textFill="#f6ff00">
+            <Label fx:id="lblDangHoc" layoutX="410.0" layoutY="66.0" text="2/10" textFill="#f6ff00">
                 <font>
                     <Font size="20.0" />
                 </font>
             </Label>
-            <ProgressBar fx:id="progressBar_KhoaHoc" layoutX="410.0" layoutY="102.0" prefHeight="4.0" prefWidth="179.0" progress="0.0" />
+            <ProgressBar fx:id="progressBar_KhoaHoc" layoutX="410.0" layoutY="102.0" prefHeight="9.0" prefWidth="179.0" progress="0.0" />
             <Label layoutX="737.0" layoutY="48.0" text="Thành tích của bạn" textFill="WHITE" />
         </children>
     </AnchorPane>
     <AnchorPane fx:id="courses" layoutX="0" layoutY="200" prefHeight="330.0" prefWidth="1000.0">
-        <AnchorPane fx:id="SuggestedCourses" layoutX="63.0" layoutY="70" prefHeight="280.0" prefWidth="869.0">
+        <AnchorPane fx:id="SuggestedCourses" layoutX="60.0" layoutY="70" prefHeight="280.0" prefWidth="870.0">
             <children>
 
             </children>
         </AnchorPane>
-        <AnchorPane fx:id="CompleteCourses" layoutX="0" layoutY="70" prefHeight="280.0" prefWidth="1000.0" visible="false">
+        <AnchorPane fx:id="CompleteCourses" layoutX="60" layoutY="70" prefHeight="280.0" prefWidth="870.0" visible="false">
 
         </AnchorPane>
-        <AnchorPane fx:id="StudyingCourses" layoutX="0" layoutY="70" prefHeight="280.0" prefWidth="1000.0" visible="false">
+        <AnchorPane fx:id="StudyingCourses" layoutX="60" layoutY="70" prefHeight="280.0" prefWidth="870.0" visible="false">
 
         </AnchorPane>
         <Label layoutX="97.0" text="Khóa học">

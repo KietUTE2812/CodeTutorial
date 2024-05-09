@@ -53,13 +53,13 @@ public class BaiHocDAO extends SysDAO<BaiHoc, String> {
 
     @Override
     public void delete(String id) {
-        String sql = "DELETE FROM BaiHoc WHERE MaBaiHoc=?";
+        String sql = "DELETE FROM BaiHoc WHERE MaBH=?";
         ConnectJDBC.update(sql, id);
     }
 
     @Override
     public BaiHoc selectById(String id) {
-        String sql = "SELECT * FROM BaiHoc WHERE MaBaiHoc=?";
+        String sql = "SELECT * FROM BaiHoc WHERE MaBH=?";
         List<BaiHoc> list = selectBySql(sql, id);
         return list.isEmpty() ? null : list.get(0);
     }
@@ -87,7 +87,7 @@ public class BaiHocDAO extends SysDAO<BaiHoc, String> {
                     entity.setThoiLuong(rs.getInt("ThoiLuong"));
                     entity.setMaChuong(rs.getString("MaChuong"));
                     entity.setThuTu(rs.getInt("ThuTu"));
-                    entity.setTrangThai(rs.getInt("TrangThai")); // Assuming TrangThai is an integer
+                    entity.setTrangThai(rs.getInt("TrangThai"));
                     entity.setGioiHanKyTu(rs.getInt("GioiHanKyTu"));
                     entity.setMucDo(rs.getString("MucDo"));
                     entity.setCodeMau(rs.getString("CodeMau"));
@@ -106,24 +106,58 @@ public class BaiHocDAO extends SysDAO<BaiHoc, String> {
         return list;
     }
 
-
-    public BaiHoc getBaiHocByThuTu(int thuTu) {
-        String sql = "call get_baihoc_by_thutu(?);";
-        return (BaiHoc) this.selectBySql(sql, thuTu);
+    protected BaiHoc selectBaiHocBySql(String sql, Object... args) {
+        BaiHoc entity = null;
+        try {
+            ResultSet rs = null;
+            try {
+                rs = ConnectJDBC.query(sql, args);
+                if (rs.next()) {
+                    entity = new BaiHoc();
+                    // Extract values from result set and set them in the BaiHoc object
+                    entity.setMaBaiHoc(rs.getString("MaBH"));
+                    entity.setTenBaiHoc(rs.getString("TenBH"));
+                    entity.setNoiDung(rs.getString("NoiDung"));
+                    entity.setDinhDang(rs.getString("DinhDang"));
+                    entity.setThoiLuong(rs.getInt("ThoiLuong"));
+                    entity.setMaChuong(rs.getString("MaChuong"));
+                    entity.setThuTu(rs.getInt("ThuTu"));
+                    entity.setTrangThai(rs.getInt("TrangThai")); // Assuming TrangThai is an integer
+                    entity.setGioiHanKyTu(rs.getInt("GioiHanKyTu"));
+                    entity.setMucDo(rs.getString("MucDo"));
+                    entity.setCodeMau(rs.getString("CodeMau"));
+                    entity.setMaKhoaHoc(rs.getString("MaKhoaHoc"));
+                }
+            } finally {
+                if (rs != null) {
+                    rs.getStatement().getConnection().close();
+                }
+            }
+        } catch (SQLException e) {
+            HandleException.printSQLException(e);
+            throw new RuntimeException(e);
+        }
+        return entity;
     }
 
-    public BaiHoc getBaiHocByMaBHMaChuong(String maBH, String maChuong) {
-        String query = "call get_baihoc_by_mabh_machuong(?, ?);";
-        return (BaiHoc) this.selectBySql(query, maBH, maChuong);
+
+    public BaiHoc getBaiHocByThuTu(int thuTu, String maKhoaHoc) {
+        String sql = "call get_baihoc_by_thutu(?, ?);";
+        return (BaiHoc) this.selectBaiHocBySql(sql, thuTu, maKhoaHoc);
+    }
+
+    public BaiHoc getBaiHocByMaBHMaChuong(String maBH, String maChuong, String MaKhoaHoc) {
+        String query = "call get_baihoc_by_mabh_machuong(?, ?, ?);";
+        return (BaiHoc) this.selectBaiHocBySql(query, maBH, maChuong, MaKhoaHoc);
 
     }
 
-    public List<Integer> getThuTuByMaChuong(String maChuong) throws SQLException {
+    public List<Integer> getThuTuByMaChuong(String maChuong, String maKhoaHoc) throws SQLException {
         List<Integer> thuTuList = new ArrayList<>();
-        String query = "CALL getThuTuByMaChuong(?);";
+        String query = "CALL getThuTuByMaChuong(?, ?);";
 
         try{
-            ResultSet rs = ConnectJDBC.query(query);
+            ResultSet rs = ConnectJDBC.query(query, maChuong, maKhoaHoc);
             while(rs.next()){
                 thuTuList.add(rs.getInt(1));
             }
@@ -134,5 +168,12 @@ public class BaiHocDAO extends SysDAO<BaiHoc, String> {
         {
             throw new RuntimeException(e);
         }
+    }
+
+
+    public List<BaiHoc> getListBaiHocByMaChuog(String maChuong, String maKhoaHoc) {
+        String sql = "select * from baihoc where MaChuong = ? AND MaKhoaHoc = ?";
+        List<BaiHoc> list = selectBySql(sql, maChuong, maKhoaHoc);
+        return list;
     }
 }

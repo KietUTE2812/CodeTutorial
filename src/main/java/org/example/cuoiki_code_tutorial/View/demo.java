@@ -19,7 +19,7 @@ public class demo extends Application {
     @Override
     public void start(Stage stage) throws IOException {
 
-        String pathToFXML = "/FXML/user_home.fxml";
+        String pathToFXML = "/FXML/gioiThieuKhoaHoc.fxml";
         FXMLLoader fxmlLoader = new FXMLLoader(BaiHocApplication.class.getResource(pathToFXML));
 
         AnchorPane root = new AnchorPane();

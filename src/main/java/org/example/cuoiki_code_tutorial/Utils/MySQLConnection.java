@@ -6,15 +6,15 @@ import java.sql.SQLException;
 
 public class MySQLConnection {
 	public static Connection getConnection() {
-		Connection con = null;
+		Connection conn = null;
 		try {
 			Class.forName("com.mysql.cj.jdbc.Driver");
-			con = DriverManager.getConnection("jdbc:mysql://localhost:3306/codelearn", "root", "nhan");
+			conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/codelearn", "root", "thanhbinh1411");
 		} catch (Exception e) {
 			System.out.println(e);
 			return null;
 		}
-		return con;
+		return conn;
 	}
 
 	public static void main(String[] args) throws SQLException {

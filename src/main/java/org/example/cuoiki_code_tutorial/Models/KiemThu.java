@@ -1,6 +1,7 @@
 package org.example.cuoiki_code_tutorial.Models;
 
 public class KiemThu {
+    private String maKH;
     private int thuTu;
     private int thuTuKiemThu;
     private String input;
@@ -9,11 +10,20 @@ public class KiemThu {
     public KiemThu() {
     }
 
-    public KiemThu(int thuTu, int thuTuKiemThu, String input, String output) {
+    public KiemThu(String maKH, int thuTu, int thuTuKiemThu, String input, String output) {
+        this.maKH = maKH;
         this.thuTu = thuTu;
         this.thuTuKiemThu = thuTuKiemThu;
         this.input = input;
         this.output = output;
+    }
+
+    public String getMaKH() {
+        return maKH;
+    }
+
+    public void setMaKH(String maKH) {
+        this.maKH = maKH;
     }
 
     public int getThuTu() {

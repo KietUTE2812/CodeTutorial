@@ -1,4 +1,12 @@
 .background {
     -fx-background-color: #98afff; /* Màu nền */
-    -fx-background-image: url("/Image/python.jpg");
+
+}
+.radio-button {
+    -fx-font-family: "Consolas";
+    -fx-font-size: 16;
+}
+.label{
+    -fx-font-family: "Consolas";
+    -fx-font-size: 16;
 }
