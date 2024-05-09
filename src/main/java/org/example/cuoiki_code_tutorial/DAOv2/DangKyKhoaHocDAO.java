@@ -83,5 +83,15 @@ public class DangKyKhoaHocDAO {
         }
         return maHV;
     }
+    public String getTenByMaHV(String username) throws SQLException {
+        String maHV = "";
+        String query = "SELECT TenHv from hocvien where MaHV = ?;";
+        ResultSet rs = ConnectJDBC.query(query, username);
+        if(rs.next())
+        {
+            maHV = rs.getString(1);
+        }
+        return maHV;
+    }
 
 }

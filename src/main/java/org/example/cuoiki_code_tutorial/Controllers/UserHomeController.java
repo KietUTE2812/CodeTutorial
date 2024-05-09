@@ -21,6 +21,7 @@ import javafx.scene.layout.VBox;
 import javafx.scene.shape.Line;
 import javafx.stage.Stage;
 import org.example.cuoiki_code_tutorial.Controllers.DucNhan.HocVienController;
+import org.example.cuoiki_code_tutorial.DAOv2.DangKyKhoaHocDAO;
 import org.example.cuoiki_code_tutorial.DAOv2.KhoaHocDAO;
 import org.example.cuoiki_code_tutorial.Models.KhoaHoc;
 import org.example.cuoiki_code_tutorial.Utils.Session;
@@ -48,6 +49,7 @@ public class UserHomeController implements Initializable {
 
     private String userName;
     KhoaHocDAO khoaHocDAO = new KhoaHocDAO();
+    private DangKyKhoaHocDAO dangKyKhoaHocDAO = new DangKyKhoaHocDAO();
 
 
     @Override
@@ -60,7 +62,13 @@ public class UserHomeController implements Initializable {
         loadKhoaHoc();
         //Session.getInstance().setLoggedInUsername("thanhbinhdang");
         userName = UserSession.getInstance().getUsername();
-        lbl_username.setText(userName);
+
+
+        try {
+            lbl_username.setText(dangKyKhoaHocDAO.getTenByMaHV(userName));
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
 
         btnShowAllCourse.setOnAction(e -> {
             try {
@@ -200,7 +208,7 @@ public class UserHomeController implements Initializable {
         ScrollPane scrollPane = new ScrollPane(flowPane);
 ////        scrollPane.setMinWidth(870);
         scrollPane.setMaxWidth(900);
-//        scrollPane.setMinHeight(320);
+        scrollPane.setMinHeight(320);
         scrollPane.setMaxHeight(320);
         scrollPane.setFitToWidth(true); // Tự động co chiều ngang của ScrollPane
         scrollPane.setFitToHeight(true); // Tự động co chiều cao của ScrollPane
