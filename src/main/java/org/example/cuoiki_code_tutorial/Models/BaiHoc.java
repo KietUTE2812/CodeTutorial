@@ -8,12 +8,27 @@ public class BaiHoc {
     private int thoiLuong;
     private String maChuong;
     private int thuTu;
-    private String trangThai;
+    private int trangThai;
+    private int gioiHanKyTu;
+    private String mucDo;
+    private String codeMau;
+    private String maKhoaHoc;
 
-    public BaiHoc(String id, String tenBaiHoc, String noiDung, int thoiLuong, String maChuong, int thuTu, int trangThai) {
+    public BaiHoc() {
     }
 
-    public BaiHoc(String maBaiHoc, String tenBaiHoc, String noiDung, String dinhDang, int thoiLuong, String maChuong, int thuTu, String trangThai) {
+    public BaiHoc(String maBaiHoc, String tenBaiHoc, String noiDung, int thoiLuong, String maChuong, int thuTu, int trangThai) {
+        this.maBaiHoc = maBaiHoc;
+        this.tenBaiHoc = tenBaiHoc;
+        this.noiDung = noiDung;
+        this.maChuong = maChuong;
+        this.thoiLuong = thoiLuong;
+
+        this.thuTu = thuTu;
+        this.trangThai = trangThai;
+    }
+
+    public BaiHoc(String maBaiHoc, String tenBaiHoc, String noiDung, String dinhDang, int thoiLuong, String maChuong, int thuTu, int trangThai, int gioiHanKyTu, String mucDo, String codeMau, String maKhoaHoc) {
         this.maBaiHoc = maBaiHoc;
         this.tenBaiHoc = tenBaiHoc;
         this.noiDung = noiDung;
@@ -22,6 +37,10 @@ public class BaiHoc {
         this.maChuong = maChuong;
         this.thuTu = thuTu;
         this.trangThai = trangThai;
+        this.gioiHanKyTu = gioiHanKyTu;
+        this.mucDo = mucDo;
+        this.codeMau = codeMau;
+        this.maKhoaHoc = maKhoaHoc;
     }
 
     public String getMaBaiHoc() {
@@ -80,11 +99,43 @@ public class BaiHoc {
         this.thuTu = thuTu;
     }
 
-    public String getTrangThai() {
+    public int getTrangThai() {
         return trangThai;
     }
 
-    public void setTrangThai(String trangThai) {
+    public void setTrangThai(int trangThai) {
         this.trangThai = trangThai;
+    }
+
+    public int getGioiHanKyTu() {
+        return gioiHanKyTu;
+    }
+
+    public void setGioiHanKyTu(int gioiHanKyTu) {
+        this.gioiHanKyTu = gioiHanKyTu;
+    }
+
+    public String getMucDo() {
+        return mucDo;
+    }
+
+    public void setMucDo(String mucDo) {
+        this.mucDo = mucDo;
+    }
+
+    public String getCodeMau() {
+        return codeMau;
+    }
+
+    public void setCodeMau(String codeMau) {
+        this.codeMau = codeMau;
+    }
+
+    public String getMaKhoaHoc() {
+        return maKhoaHoc;
+    }
+
+    public void setMaKhoaHoc(String maKhoaHoc) {
+        this.maKhoaHoc = maKhoaHoc;
     }
 }

@@ -10,6 +10,10 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
+import org.example.cuoiki_code_tutorial.Controllers.BaiHocController;
+import org.example.cuoiki_code_tutorial.Controllers.GioiThieuKhoaHocController;
+import org.example.cuoiki_code_tutorial.Controllers.SceneLoader;
+import org.example.cuoiki_code_tutorial.Controllers.UserHomeController;
 import org.example.cuoiki_code_tutorial.Dao.DucNhan.LoginDAO;
 import org.example.cuoiki_code_tutorial.Models.TaiKhoan;
 import org.example.cuoiki_code_tutorial.Utils.Session;
@@ -102,18 +106,21 @@ public class LoginController implements Initializable {
             TaiKhoan checktaikhoan = dangNhapDao.onLogin(taiKhoan);
             if(checktaikhoan != null) {
                 if (checktaikhoan.isVaiTro()) {
-//                    // Nếu là học viên
-//                    Alert alert = new Alert(Alert.AlertType.ERROR);
-//                    alert.setTitle("Đăng nhập");
-//                    alert.setHeaderText(null);
-//                    alert.setContentText("Bạn đang đăng nhập với tư cách là Học Viên!");
-//                    alert.showAndWait();
-                    btnDangNhap.getScene().getWindow().hide();
-                    Parent root = FXMLLoader.load(getClass().getResource("/FXML/hocvien.fxml"));
+                    Stage stage1 = (Stage) btnDangNhap.getScene().getWindow();
+                    stage1.close();
+                    // Load file FXML cho giao diện BaiHocController
+                    FXMLLoader loader = new FXMLLoader(getClass().getResource("/FXML/user_home.fxml"));
+                    Parent root = loader.load();
+
+                    // Lấy instance của BaiHocController
+                    UserHomeController userHomeController = loader.getController();
+
+                    // Tạo Scene mới và hiển thị giao diện BaiHocController
+                    Scene scene = new Scene(root, 1000, 600);
                     Stage stage = new Stage();
-                    Image icon = new Image(getClass().getResourceAsStream("/Image/icon.png"));
-                    stage.getIcons().add(icon);
-                    stage.setScene(new Scene(root));
+                    String pathToStyle = "/CSS/styles_userhome.css";
+                    scene.getStylesheets().add(getClass().getResource(pathToStyle).toExternalForm());
+                    stage.setScene(scene);
                     stage.show();
                 } else {
                     // Nếu là quản trị viên

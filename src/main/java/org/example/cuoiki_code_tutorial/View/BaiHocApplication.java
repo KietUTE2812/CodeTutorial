@@ -5,6 +5,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
+import org.example.cuoiki_code_tutorial.Controllers.BaiHocController;
 
 import java.io.IOException;
 
@@ -13,9 +14,9 @@ public class BaiHocApplication extends Application {
     @Override
     public void start(Stage stage) throws IOException {
 
-        String pathToFXML = "/FXML/lesson_compiler.fxml";
+        String pathToFXML = "/FXML/baihoc.fxml";
         FXMLLoader fxmlLoader = new FXMLLoader(BaiHocApplication.class.getResource(pathToFXML));
-
+        BaiHocController lessonCompiler =  fxmlLoader.getController();
         AnchorPane root = new AnchorPane();
         root.getChildren().add(fxmlLoader.load());
         root.getStyleClass().add("background");
