@@ -119,8 +119,8 @@ public class KiemTraDauVao implements Initializable {
 
     public void showQuestion(CauHoi question) {
         questionPane.getChildren().clear(); // Xóa câu hỏi cũ
-
-        Label questionLabel = new Label(question.getCauHoi());
+        String ques ="Câu "  + question.getStt() +": " + question.getCauHoi();
+        Label questionLabel = new Label(ques);
         questionLabel.setWrapText(true);
         questionPane.getChildren().add(questionLabel);
 
