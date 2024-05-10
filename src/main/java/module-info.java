@@ -8,7 +8,7 @@ module org.example.cuoiki_code_tutorial {
 
 
     requires org.fxmisc.richtext;
-    requires jython;
+    requires jython.slim;
 
 
     opens org.example.cuoiki_code_tutorial to javafx.fxml;

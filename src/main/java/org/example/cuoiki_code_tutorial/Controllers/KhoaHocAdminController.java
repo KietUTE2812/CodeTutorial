@@ -1,11 +1,13 @@
 package org.example.cuoiki_code_tutorial.Controllers;
 
+import javafx.animation.PauseTransition;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
+import javafx.geometry.Side;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -16,12 +18,14 @@ import javafx.scene.layout.VBox;
 import javafx.scene.web.HTMLEditor;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
+import javafx.util.Duration;
 import org.example.cuoiki_code_tutorial.DAOv2.BaiHocDAO;
 import org.example.cuoiki_code_tutorial.DAOv2.ChuongDAO;
 import org.example.cuoiki_code_tutorial.DAOv2.QuanLyKhoaHocDAO;
 import org.example.cuoiki_code_tutorial.Models.BaiHoc;
 import org.example.cuoiki_code_tutorial.Models.Chuong;
 import org.example.cuoiki_code_tutorial.Models.KhoaHoc;
+import org.example.cuoiki_code_tutorial.Utils.UserSession;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -63,7 +67,7 @@ public class KhoaHocAdminController {
 
     @FXML
     private Button btnBack;
-
+    List<Chuong> chuongList = new ArrayList<>();
 
 
     private QuanLyKhoaHocDAO khoaHocDAO;
@@ -111,27 +115,41 @@ public class KhoaHocAdminController {
             Chuong chuong = new Chuong();
             chuong.setTenChuong(tenChuongField.getText());
             chuong.setMaKH(newKhoaHoc.getMaKH());
+
             // Lưu chương vào cơ sở dữ liệu
             chuongDAO.insert(chuong);
+            xoaTabChuong();
+            loadChuong(newKhoaHoc);
             // Thêm giao diện cho tab mới
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/FXML/chinh_sua_bai_hoc.fxml"));
-            Parent root;
-            try {
-                root = loader.load();
-                ChinhSuaBaiHocController controller = loader.getController();
-                controller.setThem(true, new Chuong(), new KhoaHoc());
-                Scene scene = new Scene(root);
-                Stage stage = new Stage();
-                stage.setScene(scene);
-                stage.show();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
+//            FXMLLoader loader = new FXMLLoader(getClass().getResource("/FXML/chinh_sua_bai_hoc.fxml"));
+//            Parent root;
+//            try {
+//                root = loader.load();
+//                ChinhSuaBaiHocController controller = loader.getController();
+//                controller.setThem(true, new Chuong(), new KhoaHoc());
+//                Scene scene = new Scene(root);
+//                Stage stage = new Stage();
+//                stage.setScene(scene);
+//                stage.show();
+//            } catch (IOException e) {
+//                e.printStackTrace();
+//            }
         });
         vBox.getChildren().addAll(label, tenChuongField, addButton);
         tab.setContent(vBox);
         tabPane.getTabs().add(tab);
         tabPane.getSelectionModel().select(tab);
+    }
+    private void xoaTabChuong() {
+        List<Tab> tabsToRemove = new ArrayList<>();
+        for (Tab tab : tabPane.getTabs()) {
+            for (Chuong chuong : chuongList) {
+                if (tab.getText().equals(chuong.getTenChuong()) || tab.getText().equals("Chương Mới"))
+                    tabsToRemove.add(tab);
+            }
+
+        }
+        tabPane.getTabs().removeAll(tabsToRemove);
     }
     private void backToPreviousScene(Node node) {
         Stage stage = (Stage) node.getScene().getWindow();
@@ -141,7 +159,10 @@ public class KhoaHocAdminController {
 
             // Truyền dữ liệu nếu cần
             TrangChuTacGiaController controller = loader.getController();
-            //controller.setData(data);
+            if(newKhoaHoc != null) {
+                controller.setKhoaHoc(newKhoaHoc);
+            }
+
 
             Scene scene = new Scene(root);
             stage.setScene(scene);
@@ -152,7 +173,7 @@ public class KhoaHocAdminController {
     }
 
     private void EditKhoaHoc(KhoaHoc khoaHoc){
-        this.mainImage.setImage(new Image(khoaHoc.getHinhAnh()));
+        this.mainImage.setImage(new Image(new File(khoaHoc.getHinhAnh()).toURI().toString()));
         this.HtmlMoTa.setHtmlText(khoaHoc.getMoTa());
         this.tenKhoaHocField.setText(khoaHoc.getTenKH());
         loadChuong(khoaHoc);
@@ -166,7 +187,7 @@ public class KhoaHocAdminController {
                 // Thư mục lưu trữ hình ảnh
                 String imageDirectory = "src/main/resources/Store/";
                 int maxCount = getMaxFileCount(imageDirectory);
-                String imageName = "image" + (maxCount + 1) + getFileExtension(selectedFile.getName());
+                String imageName = (maxCount + 1) + getFileExtension(selectedFile.getName());
                 // Copy hình ảnh vào thư mục lưu trữ
                 Path targetPath = new File(imageDirectory + imageName).toPath();
                 Files.copy(selectedFile.toPath(), targetPath, StandardCopyOption.REPLACE_EXISTING);
@@ -202,11 +223,12 @@ public class KhoaHocAdminController {
                     String imageName = "image" + (maxCount + 1) + getFileExtension(file.getName());
                     // Copy hình ảnh vào thư mục lưu trữ
                     Path targetPath = new File(imageDirectory + imageName).toPath();
+                    Files.copy(file.toPath(), targetPath, StandardCopyOption.REPLACE_EXISTING);
                     filePath = targetPath.toString();
                     // Thêm hình ảnh vào trình chỉnh sửa HTML
 
                 }
-            } catch (FileNotFoundException e) {
+            } catch (Exception e) {
                 e.printStackTrace();
             }
         }
@@ -223,15 +245,17 @@ public class KhoaHocAdminController {
         newKhoaHoc.setMoTa(moTa);
         newKhoaHoc.setHinhAnh(filePath);
         LocalDate ngayHienTai = LocalDate.now();
-
+        newKhoaHoc.setMaAD(UserSession.getInstance().getUsername());
         // Định dạng ngày theo chuẩn "yyyy-MM-đ"
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
         String ngayTaoFormatted = ngayHienTai.format(formatter);
         newKhoaHoc.setNgayTao(LocalDate.parse(ngayTaoFormatted));
 
         // Save or update KhoaHoc object using KhoaHocService
-        if(isThem)
+        if(isThem){
             khoaHocDAO.insert(newKhoaHoc);
+        }
+
         else
             khoaHocDAO.update(newKhoaHoc);
         backToPreviousScene(btnBack);
@@ -279,7 +303,7 @@ public class KhoaHocAdminController {
         return "";
     }
     private void loadChuong(KhoaHoc khoaHoc) {
-        List<Chuong> chuongList = chuongDAO.selectAll();
+        chuongList = chuongDAO.selectAll();
         List<Chuong> chuongList1 = new ArrayList<>();
         for (Chuong chuong : chuongList) {
             if(chuong.getMaKH().equals(khoaHoc.getMaKH())){
@@ -291,6 +315,27 @@ public class KhoaHocAdminController {
             ScrollPane scrollPane = new ScrollPane();
             Tab tab = new Tab(chuong.getTenChuong());
             tab.setClosable(false);
+            tab.setId(chuong.getMaChuong());
+            ContextMenu contextMenu = new ContextMenu();
+
+            // Tạo MenuItem cho việc xóa chương
+            MenuItem deleteMenuItem = new MenuItem("Xóa chương");
+            deleteMenuItem.setOnAction(event -> {
+                // Hành động khi người dùng chọn Xóa chương
+                System.out.println("Chương đã được xóa!");
+                chuongDAO.xoaChuong(chuong.getMaChuong(), chuong.getMaKH());
+                tabPane.getTabs().remove(tab);
+            });
+            // Thêm MenuItem vào ContextMenu
+            contextMenu.getItems().add(deleteMenuItem);
+            tab.setContextMenu(contextMenu);
+            PauseTransition pause = new PauseTransition(Duration.seconds(2));
+
+            pause.setOnFinished(e -> {
+                Node theTab = tabPane.lookup(STR."#\{chuong.getMaChuong()}");
+                contextMenu.show(theTab, Side.RIGHT, 0, 0);
+            });
+
             BaiHocDAO baiHocDao = new BaiHocDAO();
             List<BaiHoc> baiHocList = baiHocDao.selectAll();
             List<BaiHoc> baiHocList1 = new ArrayList<>();

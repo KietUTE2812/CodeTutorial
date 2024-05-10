@@ -15,12 +15,13 @@ public class QuanLyKhoaHocDAO extends SysDAO<KhoaHoc, String>{
 
     @Override
     public void insert(KhoaHoc entity) {
-        String sql="Call InsertKhoaHoc(?, ?, ?, ?)";
+        String sql="Call InsertKhoaHoc(?, ?, ?, ?, ?)";
         ConnectJDBC.update(sql,
                 entity.getTenKH(),
                 entity.getMoTa(),
                 entity.getHinhAnh(),
-                entity.getNgayTao()
+                entity.getNgayTao(),
+                entity.getMaAD()
                 );
     }
 

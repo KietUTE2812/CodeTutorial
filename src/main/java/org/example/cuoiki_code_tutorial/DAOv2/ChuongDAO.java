@@ -32,7 +32,11 @@ public class ChuongDAO extends SysDAO<Chuong, String>{
         String sql="Delete from chuong where MaChuong=?";
         ConnectJDBC.update(sql, id);
     }
-
+    public void xoaChuong(String MaChuong, String MaKH)
+    {
+        String sql="UPDATE chuong set TrangThai = 0 where MaChuong=? and MaKH=?";
+        ConnectJDBC.update(sql, MaChuong, MaKH);
+    }
     @Override
     public Chuong selectById(String id) {
         String sql="SELECT * FROM Chuong WHERE MaChuong=?";
@@ -42,7 +46,7 @@ public class ChuongDAO extends SysDAO<Chuong, String>{
 
     @Override
     public List<Chuong> selectAll() {
-        String sql="SELECT * FROM Chuong Order by thuTu";
+        String sql="SELECT * FROM Chuong where TrangThai = 1 Order by thuTu";
         return selectBySql(sql);
     }
 

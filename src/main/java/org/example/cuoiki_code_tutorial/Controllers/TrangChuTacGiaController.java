@@ -13,7 +13,9 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
@@ -22,6 +24,7 @@ import org.example.cuoiki_code_tutorial.Models.KhoaHoc;
 import org.example.cuoiki_code_tutorial.Utils.Session;
 import org.example.cuoiki_code_tutorial.Utils.UserSession;
 
+import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
@@ -32,15 +35,45 @@ public class TrangChuTacGiaController implements Initializable {
 
     @FXML
     private ScrollPane scroll;
+    @FXML
+    private HBox hBoxAdmin;
+    @FXML
+    private Label lblName;
 
     @FXML
     private Button btnThemKH;
     @FXML
     private VBox vBox; // Đổi từ HBox thành VBox
     QuanLyKhoaHocDAO dao = new QuanLyKhoaHocDAO();
-
+    private List<KhoaHoc> khoaHocReal = new ArrayList<>();
+    public void setKhoaHoc(KhoaHoc khoaHoc)
+    {
+        this.khoaHocReal.add(khoaHoc);
+        loadKhoaHoc();
+    }
     private void loadKhoaHoc() {
+        lblName.setText(UserSession.getInstance().getUsername());
+        hBoxAdmin.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent mouseEvent) {
+                Stage stage = (Stage) ((Node) mouseEvent.getSource()).getScene().getWindow();
 
+                try {
+                    // Tạo loader cho file fxml của trang chỉnh sửa
+                    FXMLLoader loader = new FXMLLoader(getClass().getResource("/FXML/admin.fxml"));
+                    Parent root = loader.load();
+
+                    // Truyền thông tin của khóa học cần chỉnh sửa cho controller
+
+                    // Tạo scene mới và thiết lập cho stage
+                    Scene scene = new Scene(root);
+                    stage.setScene(scene);
+                    stage.show();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
         List<KhoaHoc> khs = dao.selectAll();
         List<KhoaHoc> khoaHocReal = new ArrayList<>();
         for (KhoaHoc kh : khs) {
@@ -102,8 +135,13 @@ public class TrangChuTacGiaController implements Initializable {
         vBoxKhoaHoc.setPrefWidth(200);
         vBoxKhoaHoc.setPadding(new Insets(10, 10, 10, 10));
         vBoxKhoaHoc.setAlignment(Pos.CENTER);
-
-        ImageView imageView = new ImageView(khoaHoc.getHinhAnh());
+        String currentWorkingDirectory = System.getProperty("user.dir");
+//        String filePath = "D:\\D\\Nam3_HK2\\LapTrinhNNTT\\CuoiKi_Code_Tutorial\\src\\main\\resources\\Store\\image1.png";
+        String filePath = STR."\{currentWorkingDirectory}/\{khoaHoc.getHinhAnh()}";
+        File file = new File(filePath);
+        System.out.println(file.getAbsolutePath());
+        String imageUrl = file.toURI().toString();
+        ImageView imageView = new ImageView(new Image(imageUrl));
         imageView.setFitWidth(300);
         imageView.setFitHeight(200);
         imageView.setSmooth(true);

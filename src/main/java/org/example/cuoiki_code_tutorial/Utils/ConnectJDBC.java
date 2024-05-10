@@ -9,10 +9,10 @@ import java.sql.SQLException;
 
 public class ConnectJDBC {
     private static String driver="com.mysql.cj.jdbc.Driver";
-    private static String dburl="jdbc:mysql://localhost:3306/codelearn";
+    private static String dburl="jdbc:mysql://localhost:3306/hoccode";
     // private static String dburl = "jdbc:sqlserver://localhost:1433;encrypt=true;trustServerCertificate=true;databaseName=EduSys";
     private static String username="root";
-    private static String password="thanhbinh1411";
+    private static String password="Kiet@2003";
 
     /*
      * Nạp driver
@@ -63,6 +63,7 @@ public class ConnectJDBC {
         try {
             PreparedStatement stmt = ConnectJDBC.getStmt(sql, args);
             try {
+                System.out.println(stmt);
                 stmt.executeUpdate();
             }
             finally{
