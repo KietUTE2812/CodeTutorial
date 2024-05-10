@@ -151,6 +151,7 @@ public class BaiHocController implements Initializable {
 //    }
 
     public void getBaiHocByThuTu(int thuTu, String maChuong, String maKhoaHoc, KhoaHoc khoaHoc) throws SQLException {
+        btnNopBai.setDisable(true);
         maKhoaHocfinal = maKhoaHoc;
         maChuongfinal = maChuong;
         khoaHocf = khoaHoc;

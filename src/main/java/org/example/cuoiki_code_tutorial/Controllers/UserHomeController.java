@@ -23,6 +23,7 @@ import javafx.stage.Stage;
 import org.example.cuoiki_code_tutorial.Controllers.DucNhan.HocVienController;
 import org.example.cuoiki_code_tutorial.DAOv2.DangKyKhoaHocDAO;
 import org.example.cuoiki_code_tutorial.DAOv2.KhoaHocDAO;
+import org.example.cuoiki_code_tutorial.DAOv2.TienDoDAO;
 import org.example.cuoiki_code_tutorial.Models.KhoaHoc;
 import org.example.cuoiki_code_tutorial.Utils.Session;
 import org.example.cuoiki_code_tutorial.Utils.UserSession;
@@ -49,8 +50,9 @@ public class UserHomeController implements Initializable {
 
     private String userName;
     KhoaHocDAO khoaHocDAO = new KhoaHocDAO();
+    private TienDoDAO tienDoDAO = new TienDoDAO();
     private DangKyKhoaHocDAO dangKyKhoaHocDAO = new DangKyKhoaHocDAO();
-
+    Float tyLe ;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -123,6 +125,28 @@ public class UserHomeController implements Initializable {
                 progressBar_KhoaHoc.progressProperty().asString("%.0f%%")
         );
         progressBar_KhoaHoc.accessibleTextProperty();
+
+        List<KhoaHoc> khs = khoaHocDAO.selectAll();
+        for(KhoaHoc khoaHoc : khs)
+        {
+            try {
+                tyLe =  tienDoDAO.tyLeHoanThanh(userName, khoaHoc.getMaKH());
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
+            if(tyLe != null)
+            {
+                if(tyLe == 1)
+                {
+                    tienDoDAO.capNhatTienDo(userName, khoaHoc.getMaKH(), 1);
+                }
+                else
+                {
+                    tienDoDAO.capNhatTienDo(userName, khoaHoc.getMaKH(), 0);
+                }
+            }
+        }
+
 
 
     }

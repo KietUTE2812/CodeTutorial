@@ -17,7 +17,7 @@
         <children>
             <Label fx:id="courseNameLabel">
                 <font>
-                    <Font name="Consolas" size="24.0" />
+                    <Font name="Consolas" size="16.0" />
                 </font>
             </Label>
             <Label fx:id="timerLabel" layoutX="750.0" layoutY="95.0" />

@@ -29,6 +29,7 @@ public class PythonExecutor {
         try {
             StringWriter writer = new StringWriter();
             interpreter.setOut(writer);
+
             interpreter.exec(input);
             output = writer.toString();
         } catch (Exception e) {

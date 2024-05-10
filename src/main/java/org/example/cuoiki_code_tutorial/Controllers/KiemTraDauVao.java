@@ -121,6 +121,7 @@ public class KiemTraDauVao implements Initializable {
         questionPane.getChildren().clear(); // Xóa câu hỏi cũ
 
         Label questionLabel = new Label(question.getCauHoi());
+        questionLabel.setWrapText(true);
         questionPane.getChildren().add(questionLabel);
 
         ToggleGroup answerGroup = new ToggleGroup();

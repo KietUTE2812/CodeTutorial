@@ -14,11 +14,17 @@ import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.paint.Color;
+import javafx.scene.shape.Arc;
+import javafx.scene.shape.ArcType;
+import javafx.scene.shape.Circle;
+import javafx.scene.text.Text;
 import javafx.scene.web.WebEngine;
 import javafx.scene.web.WebView;
 import javafx.stage.Stage;
 import org.example.cuoiki_code_tutorial.DAOv2.DangKyKhoaHocDAO;
 import org.example.cuoiki_code_tutorial.DAOv2.KiemTraDauVaoDAO;
+import org.example.cuoiki_code_tutorial.DAOv2.TienDoDAO;
 import org.example.cuoiki_code_tutorial.Models.CauHoi;
 import org.example.cuoiki_code_tutorial.Models.KhoaHoc;
 import org.example.cuoiki_code_tutorial.Utils.Session;
@@ -51,11 +57,26 @@ public class GioiThieuKhoaHocController implements Initializable {
 
     private DangKyKhoaHocDAO dangKyKhoaHocDAO = new DangKyKhoaHocDAO();
     private KiemTraDauVaoDAO kiemTraDauVaoDAO = new KiemTraDauVaoDAO();
+    private TienDoDAO tienDoDAO = new TienDoDAO();
+
+    Arc arc = new Arc();
+    Label percentageLabel = new Label("0%");
+
+    @FXML
+    private Arc percentage;
+    @FXML
+    private Text percentageText;
+
+    Float tyLe ;
 
     void loadKhoaHoc(KhoaHoc khoaHoc) throws SQLException {
+        userName = UserSession.getInstance().getUsername();
+        tyLe =  tienDoDAO.tyLeHoanThanh(userName, khoaHoc.getMaKH());
+
+
         khoaHocf = khoaHoc;
         maKhoaHoc = khoaHoc.getMaKH();
-        userName = UserSession.getInstance().getUsername();
+
         //Button hocNgay = new Button("Vào học ngay");
         lbl_CourseName.setText(khoaHoc.getTenKH());
         lbl_IDad.setText(khoaHoc.getMaAD());
@@ -89,6 +110,8 @@ public class GioiThieuKhoaHocController implements Initializable {
             }
         });
         if (dangKyKhoaHocDAO.isDangKyKhaohocByUssername(userName, maKhoaHoc)) {
+            updatePercentage(tyLe);
+
             btnStudyNow.setVisible(true);
             btn_SignCourse.setVisible(false);
             Float score = dangKyKhoaHocDAO.isKiemtraDauVao(maKhoaHoc, userName);
@@ -105,6 +128,28 @@ public class GioiThieuKhoaHocController implements Initializable {
             btn_SignCourse.setVisible(true);
             btnTestDauVao.setVisible(false);
         }
+    }
+
+    public void updatePercentage(double value) {
+        percentageText.setVisible(true);
+        percentage.setVisible(true);
+        double radius = percentage.getRadiusX();
+        double circumference = 360;
+        double strokeLength = circumference * (value);
+
+        percentage.setStartAngle(90); // Bắt đầu vẽ từ góc trên
+
+        percentage.setLength(strokeLength);
+        percentage.setType(ArcType.ROUND); // Vẽ Arc tròn
+        percentage.setFill(Color.GREENYELLOW); // Đặt màu nền trong suốt
+        percentage.setStroke(Color.GREENYELLOW); // Đặt màu của đường viền
+        percentage.setStrokeWidth(10); // Đặt độ rộng của đường viền
+
+        // Cập nhật số phần trăm hiển thị bên trong Arc
+        percentageText.setText(String.format("%.2f%%", value*100));
+        //percentageText.setX(percentage.getCenterX() - percentageText.getLayoutBounds().getWidth() / 2);
+        //percentageText.setY(percentage.getCenterY() + percentageText.getLayoutBounds().getHeight() / 4);
+
     }
 
 

@@ -97,4 +97,34 @@ public class TienDoDAO extends SysDAO<TienDo, String>{
         }
         return tienDo;
     }
+
+    public Float tyLeHoanThanh(String maHV, String maKhoaHoc) throws SQLException {
+        String query = "SELECT\n" +
+                "    MaHV,\n" +
+                "    MaKhoaHoc,\n" +
+                "    SUM(CASE WHEN TrangThai = 0 THEN 1 ELSE 0 END) AS SoTrangThai0,\n" +
+                "    SUM(CASE WHEN TrangThai = 1 THEN 1 ELSE 0 END) AS SoTrangThai1,\n" +
+                "    CASE\n" +
+                "        WHEN (SUM(CASE WHEN TrangThai = 0 THEN 1 ELSE 0 END) + SUM(CASE WHEN TrangThai = 1 THEN 1 ELSE 0 END)) = 0 THEN 0\n" +
+                "        ELSE SUM(CASE WHEN TrangThai = 1 THEN 1 ELSE 0 END) * 1.0 / (SUM(CASE WHEN TrangThai = 0 THEN 1 ELSE 0 END) + SUM(CASE WHEN TrangThai = 1 THEN 1 ELSE 0 END))\n" +
+                "    END AS TyLe\n" +
+                "FROM\n" +
+                "    khoahoc_baihoc\n" +
+                "Where MaHV = ? AND MaKhoaHoc = ?\n" +
+                "GROUP BY\n" +
+                "    MaHV, MaKhoaHoc;";
+        ResultSet rs = ConnectJDBC.query(query, maHV, maKhoaHoc);
+        Float tyLe = 0.0F;
+        if(rs.next())
+        {
+            tyLe = rs.getFloat("TyLe");
+        }
+        return tyLe;
+    }
+
+    public void capNhatTienDo(String maHV, String maKH, int trangThai)
+    {
+        String query  ="UPDATE `codelearn`.`dangky` SET `TrangThai` = ? WHERE (`MaHV` = ?) and (`MaKH` = ?);";
+        ConnectJDBC.update(query, trangThai, maHV, maKH);
+    }
 }
