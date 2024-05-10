@@ -13,6 +13,7 @@ import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Arc;
@@ -168,6 +169,12 @@ public class GioiThieuKhoaHocController implements Initializable {
             Stage stage = (Stage) imglogoCodeLearn.getScene().getWindow();
             SceneLoader.loadScene(resPath, cssPath, stage);
         });
+        imglogout.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent mouseEvent) {
+                showAlert1("Đăng xuất");
+            }
+        });
 
 
     }
@@ -266,5 +273,34 @@ public class GioiThieuKhoaHocController implements Initializable {
         stage.show();
     }
 
+    public void DangXuat()
+    {
+        Session.getInstance().setLoggedInUsername(null);
+        UserSession.getInstance().setUsername(null);
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/FXML/login.fxml"));
+        Parent root = null;
+        try {
+            root = loader.load();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        Stage stage = (Stage) imglogoCodeLearn.getScene().getWindow();
+        Scene scene = new Scene(root);
+        stage.setScene(scene);
+        stage.show();
+    }
 
+    private void showAlert1(String message) {
+        Alert alert = new Alert(Alert.AlertType.INFORMATION); // Use INFORMATION, WARNING, ERROR as needed
+        alert.setTitle("Thông báo");
+        alert.setHeaderText(null); // Optional header text
+        alert.setContentText(message);
+
+        alert.showAndWait().ifPresent(response -> {
+            if (response == ButtonType.OK) {
+                DangXuat();
+
+            }
+        }); // Display the alert and wait for user interaction
+    }
 }

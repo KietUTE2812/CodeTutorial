@@ -101,7 +101,7 @@ public class UserHomeController implements Initializable {
         });
 
 
-        progressBar_expAcc.setProgress(0.5); // Đặt tiến trình ban đầu là 50%
+        progressBar_expAcc.setProgress(0.0); // Đặt tiến trình ban đầu là 50%
         progressBar_expAcc.idProperty().bind(
                 progressBar_expAcc.progressProperty().asString("%.0f%%")
         );

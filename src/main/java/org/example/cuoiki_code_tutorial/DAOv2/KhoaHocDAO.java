@@ -34,7 +34,7 @@ public class KhoaHocDAO extends SysDAO <KhoaHoc, String>{
 
     @Override
     public List<KhoaHoc> selectAll() {
-        String sql = "SELECT * FROM khoahoc ";
+        String sql = "SELECT * FROM khoahoc where TrangThai = 1;";
         List<KhoaHoc> khoaHocs = selectBySql(sql);
         return khoaHocs;
     }
@@ -84,8 +84,8 @@ public class KhoaHocDAO extends SysDAO <KhoaHoc, String>{
     }
 
     public String KhoaHocDaHoc(String username) throws SQLException {
-        String sql1 = "select count(MaKhoaHoc) from khoahoc;";
-        String sql2 = "select count(MaKH) from dangky where MaHV = ?;";
+        String sql1 = "select count(MaKhoaHoc) from khoahoc where TrangThai = 1;";
+        String sql2 = "select count(MaKH) from dangky where MaHV = ? ;";
         String res = "";
         int danghoc = 0;
         int khoahoc = 0;
